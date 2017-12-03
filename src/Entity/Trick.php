@@ -65,7 +65,7 @@ class Trick
 	/**
 	 * @return string
 	 */
-	public function getName(): string
+	public function getName(): ?string
 	{
 		return $this->name;
 	}
@@ -81,7 +81,7 @@ class Trick
 	/**
 	 * @return string
 	 */
-	public function getSlug(): string
+	public function getSlug(): ?string
 	{
 		return $this->slug;
 	}
@@ -97,7 +97,7 @@ class Trick
 	/**
 	 * @return string
 	 */
-	public function getDescription(): string
+	public function getDescription(): ?string
 	{
 		return $this->description;
 	}
@@ -133,7 +133,7 @@ class Trick
 	/**
 	 * @return Collection|Category[]
 	 */
-	public function getCategories(): Collection
+	public function getCategories(): ?Collection
 	{
 		return $this->categories;
 	}
@@ -163,7 +163,7 @@ class Trick
 	/**
 	 * @return Collection|Image[]
 	 */
-	public function getImages(): Collection
+	public function getImages(): ?Collection
 	{
 		return $this->images;
 	}
@@ -192,7 +192,7 @@ class Trick
 	/**
 	 * @return Collection|Video[]
 	 */
-	public function getVideos(): Collection
+	public function getVideos(): ?Collection
 	{
 		return $this->videos;
 	}

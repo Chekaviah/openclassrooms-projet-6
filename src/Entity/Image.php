@@ -110,7 +110,7 @@ class Image
 
 	public function getUploadRootDir()
 	{
-		return __DIR__.'/../../../../web/'.$this->getUploadDir();
+		return __DIR__.'/../../public/'.$this->getUploadDir();
 	}
 
 	/**
@@ -135,7 +135,7 @@ class Image
 	/**
 	 * @return string
 	 */
-	public function getUrl(): string
+	public function getUrl(): ?string
 	{
 		return $this->url;
 	}
@@ -154,7 +154,7 @@ class Image
 	/**
 	 * @return string
 	 */
-	public function getAlt(): string
+	public function getAlt(): ?string
 	{
 		return $this->alt;
 	}
@@ -162,7 +162,7 @@ class Image
 	/**
 	 * @return UploadedFile
 	 */
-	public function getFile(): UploadedFile
+	public function getFile(): ?UploadedFile
 	{
 		return $this->file;
 	}
@@ -196,7 +196,7 @@ class Image
 	/**
 	 * @return Trick
 	 */
-	public function getTrick(): Trick
+	public function getTrick(): ?Trick
 	{
 		return $this->trick;
 	}
@@ -204,7 +204,7 @@ class Image
 	/**
 	 * @return string
 	 */
-	public function getPath(): string
+	public function getPath(): ?string
 	{
 		return $this->getUploadDir().'/'.$this->getId().'.'.$this->getUrl();
 	}

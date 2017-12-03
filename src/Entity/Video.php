@@ -53,7 +53,7 @@ class Video
 	/**
 	 * @return string
 	 */
-	public function getUrl(): string
+	public function getUrl(): ?string
 	{
 		return $this->url;
 	}
@@ -72,7 +72,7 @@ class Video
 	/**
 	 * @return Trick
 	 */
-	public function getTrick(): Trick
+	public function getTrick(): ?Trick
 	{
 		return $this->trick;
 	}

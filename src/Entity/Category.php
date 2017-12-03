@@ -41,7 +41,7 @@ class Category
 	/**
 	 * @return string
 	 */
-	public function getName(): string
+	public function getName(): ?string
 	{
 		return $this->name;
 	}
@@ -57,7 +57,7 @@ class Category
 	/**
 	 * @return string
 	 */
-	public function getSlug(): string
+	public function getSlug(): ?string
 	{
 		return $this->slug;
 	}
