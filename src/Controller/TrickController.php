@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 class TrickController extends AbstractController
 {
     /**
-     * @Route("/", name="trick")
+     * @Route("/", methods="GET", name="trick")
 	 * @return Response
      */
     public function index(): Response
@@ -26,7 +26,7 @@ class TrickController extends AbstractController
     }
 
 	/**
-	 * @Route("/trick/list", name="trick_list")
+	 * @Route("/trick/list", methods="GET", name="trick_list")
 	 * @return Response
 	 */
     public function listAction(): Response
@@ -42,7 +42,7 @@ class TrickController extends AbstractController
 
 	/**
 	 * @param string $slug
-	 * @Route("/trick/view/{slug}", name="trick_view")
+	 * @Route("/trick/view/{slug}", methods="GET", name="trick_view")
 	 * @return Response
 	 */
 	public function viewAction($slug): Response
@@ -58,7 +58,7 @@ class TrickController extends AbstractController
 
 	/**
 	 * @param Request $request
-	 * @Route("/trick/create", name="trick_create")
+	 * @Route("/trick/create", methods={"GET","POST"}, name="trick_create")
 	 * @return Response
 	 */
 	public function createAction(Request $request): Response
@@ -81,7 +81,7 @@ class TrickController extends AbstractController
 	/**
 	 * @param Request $request
 	 * @param int $id
-	 * @Route("/trick/edit/{id}", requirements={"id": "\d+"}, name="trick_edit")
+	 * @Route("/trick/edit/{id}", methods={"GET","POST"}, requirements={"id": "\d+"}, name="trick_edit")
 	 * @return Response
 	 */
 	public function editAction(Request $request, $id): Response
@@ -107,7 +107,7 @@ class TrickController extends AbstractController
 
 	/**
 	 * @param int $id
-	 * @Route("/trick/delete/{id}", requirements={"id": "\d+"}, name="trick_delete")
+	 * @Route("/trick/delete/{id}", methods="GET", requirements={"id": "\d+"}, name="trick_delete")
 	 * @return Response
 	 */
 	public function deleteAction(Request $request, $id): Response

@@ -15,7 +15,7 @@ class CategoryController extends AbstractController
 {
     /**
 	 * @param Request $request
-     * @Route("/category/create", name="category_create")
+     * @Route("/category/create", methods={"GET","POST"}, name="category_create")
 	 * @return Response
      */
     public function createAction(Request $request)
@@ -37,7 +37,7 @@ class CategoryController extends AbstractController
 
 	/**
 	 * @param string $slug
-	 * @Route("/category/view/{slug}", name="category_view")
+	 * @Route("/category/view/{slug}", methods="GET", name="category_view")
 	 * @return Response
 	 */
 	public function viewAction($slug): Response
@@ -56,7 +56,7 @@ class CategoryController extends AbstractController
 
 	/**
 	 * @param Request $request
-	 * @Route("/category/list", name="category_list")
+	 * @Route("/category/list", methods="GET", name="category_list")
 	 * @return Response
 	 */
 	public function listAction(): Response
@@ -72,7 +72,7 @@ class CategoryController extends AbstractController
 
 	/**
 	 * @param int $id
-	 * @Route("/category/delete/{id}", requirements={"id": "\d+"}, name="category_delete")
+	 * @Route("/category/delete/{id}", methods="GET", requirements={"id": "\d+"}, name="category_delete")
 	 * @return Response
 	 */
 	public function deleteAction(Request $request, $id): Response
