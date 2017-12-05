@@ -21,9 +21,9 @@ class CategoryController extends AbstractController
     public function createAction(Request $request)
     {
 		$category = new Category();
-		$form = $this->createForm(CategoryType::class, $category);
+		$form = $this->createForm(CategoryType::class, $category)->handleRequest($request);
 
-		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+		if ($form->isSubmitted() && $form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($category);
 			$em->flush();
@@ -55,7 +55,6 @@ class CategoryController extends AbstractController
 	}
 
 	/**
-	 * @param Request $request
 	 * @Route("/category/list", methods="GET", name="category_list")
 	 * @return Response
 	 */
@@ -77,6 +76,7 @@ class CategoryController extends AbstractController
 	 */
 	public function deleteAction(Request $request, $id): Response
 	{
+		//TODO remove form
 		/** @var Category $category */
 		$category = $this->getDoctrine()
 			->getRepository(Category::class)

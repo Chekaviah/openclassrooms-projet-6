@@ -79,8 +79,8 @@ class TrickController extends AbstractController
 	}
 
 	/**
-	 * @param Request $request
 	 * @param int $id
+	 * @param Request $request
 	 * @Route("/trick/edit/{id}", methods={"GET","POST"}, requirements={"id": "\d+"}, name="trick_edit")
 	 * @return Response
 	 */
@@ -90,9 +90,9 @@ class TrickController extends AbstractController
 			->getRepository(Trick::class)
 			->find($id);
 
-		$form = $this->createForm(TrickEditType::class, $trick);
+		$form = $this->createForm(TrickEditType::class, $trick)->handleRequest($request);
 
-		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+		if ($form->isSubmitted() && $form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 
 			$em->persist($trick);
@@ -107,11 +107,13 @@ class TrickController extends AbstractController
 
 	/**
 	 * @param int $id
+	 * @param Request $request
 	 * @Route("/trick/delete/{id}", methods="GET", requirements={"id": "\d+"}, name="trick_delete")
 	 * @return Response
 	 */
 	public function deleteAction(Request $request, $id): Response
 	{
+		//TODO remove form
 		$trick = $this->getDoctrine()
 			->getRepository(Trick::class)
 			->find($id);
