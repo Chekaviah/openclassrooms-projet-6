@@ -10,6 +10,7 @@ class Slugger
 	 */
 	public static function slugify(string $text): string
 	{
+		setlocale(LC_CTYPE, 'en-US');
 		$text = preg_replace('~[^\pL\d]+~u', '-', $text);
 		$text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
 		$text = preg_replace('~[^-\w]+~', '', $text);
