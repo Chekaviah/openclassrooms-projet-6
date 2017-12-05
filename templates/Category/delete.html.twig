@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <h3>Effacer une catégorie</h3>
+    <div class="well">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Supprimer" class="btn btn-danger" />
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <h3>Ajouter un trick</h3>
+    <div class="well" id="edit-form">
+        {{ form(form) }}
+        <a href="#" id="add_image" class="btn btn-default">Ajouter une image</a>
+        <a href="#" id="add_video" class="btn btn-default">Ajouter une video</a>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // IMAGES
+            var $image_container = $('div#trick_edit_images');
+            var image_index = $image_container.find(':input').length;
+
+            $('#add_image').click(function(e) {
+                addItem($image_container, 'image');
+                e.preventDefault();
+                return false;
+            });
+
+            if (image_index == 0) {
+                addItem($image_container, 'image');
+            } else {
+                $image_container.children('div').each(function() {
+                    addDeleteLink($(this));
+                });
+            }
+
+            // VIDEOS
+            var $video_container = $('div#trick_edit_videos');
+            var video_index = $video_container.find(':input').length;
+
+            $('#add_video').click(function(e) {
+                addItem($video_container, 'video');
+                e.preventDefault();
+                return false;
+            });
+
+            if (video_index == 0) {
+                addItem($video_container, 'video');
+            } else {
+                $video_container.children('div').each(function() {
+                    addDeleteLink($(this));
+                });
+            }
+
+            // TEMPLATES
+            function addItem($container, $type) {
+                if($type == 'image') {
+                    index = image_index;
+                    image_index++;
+                } else {
+                    index = video_index;
+                    video_index++;
+                }
+
+                var template = $container.attr('data-prototype')
+                                .replace(/__name__label__/g, $type+' n°' + (index+1))
+                                .replace(/__name__/g,        index)
+                        ;
+                var $prototype = $(template);
+
+                addDeleteLink($prototype);
+                $container.append($prototype);
+            }
+
+            function addDeleteLink($prototype) {
+                var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+                $prototype.append($deleteLink);
+
+                $deleteLink.click(function(e) {
+                    $prototype.remove();
+                    e.preventDefault();
+                    return false;
+                });
+            }
+        });
+    </script>
+{% endblock %}
