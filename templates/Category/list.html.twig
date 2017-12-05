@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    {% for category in categories %}
+        <p>
+            <a href="{{ path('category_view', {'slug': category.slug}) }}">
+                {{ category.name }}
+            </a>
+        </p>
+    {% endfor %}
+    <p><a href="{{ path('category_create') }}" class="btn btn-primary">Ajouter</a></p>
+{% endblock %}

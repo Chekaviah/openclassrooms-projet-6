@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    {% for trick in tricks %}
+        <p>
+            <a href="{{ path('trick_view', {'slug': trick.slug}) }}">
+                {{ trick.name }}
+            </a>
+        </p>
+    {% endfor %}
+    <p><a href="{{ path('trick_create') }}" class="btn btn-primary">Ajouter</a></p>
+{% endblock %}

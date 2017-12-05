@@ -2,14 +2,19 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Category;
 use App\Entity\Image;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping\JoinTable;
 
 /**
  * @ORM\Table(name="trick")
  * @ORM\Entity(repositoryClass="App\Repository\TrickRepository")
+ * @UniqueEntity(fields={"name", "slug"})
  */
 class Trick
 {
@@ -24,35 +29,51 @@ class Trick
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", length=255, unique=true)
+	 * @Assert\NotBlank()
+	 * @Assert\Length(max=100, maxMessage="Le titre doit faire au maximum {{limit}} caractères.")
 	 */
 	private $name;
 
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", length=255, unique=true)
+	 * @Assert\NotBlank()
+	 * @Assert\Length(max=100, maxMessage="Le slug doit faire au maximum {{limit}} caractères.")
 	 */
 	private $slug;
 
 	/**
 	 * @var string
 	 * @ORM\Column(type="text", nullable=true)
+	 * @Assert\NotBlank()
 	 */
 	private $description;
 
 	/**
-	 * @ORM\ManyToMany(targetEntity="Category", cascade={"persist"})
+	 * @var Category[]|ArrayCollection
+	 * @ORM\ManyToMany(targetEntity="Category", cascade={"persist"}, inversedBy="tricks")
+	 * @JoinTable(name="trick_category")
 	 */
 	private $categories;
 
 	/**
+	 * @var Image[]|ArrayCollection
 	 * @ORM\OneToMany(targetEntity="App\Entity\Image", cascade={"persist", "remove"}, mappedBy="trick")
 	 */
 	private $images;
 
 	/**
+	 * @var Video[]|ArrayCollection
 	 * @ORM\OneToMany(targetEntity="App\Entity\Video", cascade={"persist", "remove"}, mappedBy="trick")
 	 */
 	private $videos;
+
+	public function __construct()
+	{
+		$this->images = new ArrayCollection();
+		$this->videos = new ArrayCollection();
+		$this->categories = new ArrayCollection();
+	}
 
 	/**
 	 * @return int
@@ -73,7 +94,7 @@ class Trick
 	/**
 	 * @param string $name
 	 */
-	public function setName($name)
+	public function setName(string $name)
 	{
 		$this->name = $name;
 	}
@@ -89,7 +110,7 @@ class Trick
 	/**
 	 * @param string $slug
 	 */
-	public function setSlug($slug)
+	public function setSlug(string $slug)
 	{
 		$this->slug = $slug;
 	}
@@ -105,7 +126,7 @@ class Trick
 	/**
 	 * @param string $description
 	 */
-	public function setDescription($description)
+	public function setDescription(string $description)
 	{
 		$this->description = $description;
 	}
@@ -126,7 +147,6 @@ class Trick
 	 */
 	public function removeCategory(Category $category)
 	{
-		/** @noinspection PhpUndefinedMethodInspection */
 		$this->categories->removeElement($category);
 	}
 
@@ -137,7 +157,6 @@ class Trick
 	{
 		return $this->categories;
 	}
-
 
 	/**
 	 * @param Image $image
@@ -156,7 +175,6 @@ class Trick
 	 */
 	public function removeImage(Image $image)
 	{
-		/** @noinspection PhpUndefinedMethodInspection */
 		$this->images->removeElement($image);
 	}
 

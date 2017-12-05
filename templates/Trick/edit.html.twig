@@ -2,10 +2,8 @@
 
 {% block body %}
     <h3>Ajouter un trick</h3>
-    <div class="well" id="add-form">
-        {{ form_start(form) }}
-            {{ form_widget(form) }}
-        {{ form_end(form) }}
+    <div class="well" id="edit-form">
+        {{ form(form) }}
         <a href="#" id="add_image" class="btn btn-default">Ajouter une image</a>
         <a href="#" id="add_video" class="btn btn-default">Ajouter une video</a>
     </div>
@@ -17,7 +15,7 @@
     <script type="text/javascript">
         $(document).ready(function() {
             // IMAGES
-            var $image_container = $('div#trick_images');
+            var $image_container = $('div#trick_edit_images');
             var image_index = $image_container.find(':input').length;
 
             $('#add_image').click(function(e) {
@@ -35,7 +33,7 @@
             }
 
             // VIDEOS
-            var $video_container = $('div#trick_videos');
+            var $video_container = $('div#trick_edit_videos');
             var video_index = $video_container.find(':input').length;
 
             $('#add_video').click(function(e) {

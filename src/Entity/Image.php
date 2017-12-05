@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Trick;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="image")
@@ -24,12 +25,14 @@ class Image
 	/**
 	 * @var string
 	 * @ORM\Column(name="url", type="string", length=255)
+	 * @Assert\NotBlank()
 	 */
 	private $url;
 
 	/**
 	 * @var string
 	 * @ORM\Column(name="alt", type="string", length=255)
+	 * @Assert\NotBlank()
 	 */
 	private $alt;
 
@@ -41,6 +44,7 @@ class Image
 
 	/**
 	 * @var UploadedFile
+	 * @Assert\Image()
 	 */
 	private $file;
 
@@ -125,7 +129,7 @@ class Image
 	 * @param string $url
 	 * @return Image
 	 */
-	public function setUrl($url): Image
+	public function setUrl(string $url): Image
 	{
 		$this->url = $url;
 
@@ -144,7 +148,7 @@ class Image
 	 * @param string $alt
 	 * @return Image
 	 */
-	public function setAlt($alt): Image
+	public function setAlt(string $alt): Image
 	{
 		$this->alt = $alt;
 
