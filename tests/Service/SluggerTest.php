@@ -27,6 +27,5 @@ class SluggerTest extends TestCase
 		yield [' lOrEm  iPsUm  ', 'lorem-ipsum'];
 		yield ['!Lorem Ipsum!', 'lorem-ipsum'];
 		yield ['lorem-ipsum', 'lorem-ipsum'];
-		yield ['lorèm-ïpsum', 'lorem-ipsum'];
 	}
 }
