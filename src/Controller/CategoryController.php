@@ -36,13 +36,16 @@ class CategoryController extends AbstractController
     }
 
 	/**
-	 * @param Category $category
-	 * @Route("/category/view/{id}", requirements={"id": "\d+"}, name="category_view_id")
+	 * @param string $slug
 	 * @Route("/category/view/{slug}", name="category_view")
 	 * @return Response
 	 */
-	public function viewAction(Category $category): Response
+	public function viewAction($slug): Response
 	{
+		$category = $this->getDoctrine()
+			->getRepository(Category::class)
+			->findOneBy(['slug' => $slug]);
+
 		$tricks = $category->getTricks();
 
 		return $this->render('category/view.html.twig', array(
@@ -56,7 +59,7 @@ class CategoryController extends AbstractController
 	 * @Route("/category/list", name="category_list")
 	 * @return Response
 	 */
-	public function listAction(Request $request): Response
+	public function listAction(): Response
 	{
 		$categories = $this->getDoctrine()
 			->getRepository(Category::class)
@@ -68,18 +71,24 @@ class CategoryController extends AbstractController
 	}
 
 	/**
-	 * @param Category $category
+	 * @param int $id
 	 * @Route("/category/delete/{id}", requirements={"id": "\d+"}, name="category_delete")
 	 * @return Response
 	 */
-	public function deleteAction(Request $request, Category $category): Response
+	public function deleteAction(Request $request, $id): Response
 	{
+		/** @var Category $category */
+		$category = $this->getDoctrine()
+			->getRepository(Category::class)
+			->find($id);
+
 		$em = $this->getDoctrine()->getManager();
 		/** @var Form $form */
 		$form = $this->get('form.factory')->create();
 
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 			foreach ($category->getTricks() as $trick) {
+				/** @var Trick $trick */
 				$trick->removeCategory($category);
 				$em->persist($trick);
 			}

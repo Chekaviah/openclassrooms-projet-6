@@ -16,13 +16,13 @@ class TrickEditType extends AbstractType
 				'entry_type'	=>	ImageType::class,
 				'allow_add'		=>	true,
 				'allow_delete'	=>	true,
-				'by_reference'	=> 	true
+				'by_reference'	=> 	false
 			))
 			->add('videos', 		CollectionType::class, array(
 				'entry_type'	=>	VideoType::class,
 				'allow_add'		=> 	true,
 				'allow_delete'	=> 	true,
-				'by_reference'	=>	true
+				'by_reference'	=>	false
 			));
 	}
 

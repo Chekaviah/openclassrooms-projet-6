@@ -58,13 +58,13 @@ class Trick
 
 	/**
 	 * @var Image[]|ArrayCollection
-	 * @ORM\OneToMany(targetEntity="App\Entity\Image", cascade={"persist", "remove"}, mappedBy="trick")
+	 * @ORM\OneToMany(targetEntity="App\Entity\Image", cascade={"persist", "remove", "refresh"}, mappedBy="trick", orphanRemoval=true)
 	 */
 	private $images;
 
 	/**
 	 * @var Video[]|ArrayCollection
-	 * @ORM\OneToMany(targetEntity="App\Entity\Video", cascade={"persist", "remove"}, mappedBy="trick")
+	 * @ORM\OneToMany(targetEntity="App\Entity\Video", cascade={"persist", "remove", "refresh"}, mappedBy="trick", orphanRemoval=true)
 	 */
 	private $videos;
 
@@ -203,7 +203,6 @@ class Trick
 	 */
 	public function removeVideo(Video $video)
 	{
-		/** @noinspection PhpUndefinedMethodInspection */
 		$this->videos->removeElement($video);
 	}
 
