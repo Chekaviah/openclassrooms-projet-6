@@ -1,0 +1,10 @@
+App\Entity\Image:
+    properties:
+        name:
+            - NotBlank: ~
+        extension:
+            - NotBlank: ~
+        file:
+            - Image:
+                mimeTypesMessage: "Ce fichier n'est pas une image valide"
+                corruptedMessage: "Cette image est corrompue"

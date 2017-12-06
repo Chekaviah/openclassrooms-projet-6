@@ -6,7 +6,6 @@ use App\Service\Uploader;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Trick;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="image")
@@ -26,14 +25,12 @@ class Image
 	/**
 	 * @var string
 	 * @ORM\Column(name="name", type="string", length=255)
-	 * @Assert\NotBlank()
 	 */
 	private $name;
 
 	/**
 	 * @var string
 	 * @ORM\Column(name="extension", type="string", length=255)
-	 * @Assert\NotBlank()
 	 */
 	private $extension;
 
@@ -45,7 +42,6 @@ class Image
 
 	/**
 	 * @var UploadedFile
-	 * @Assert\Image()
 	 */
 	private $file;
 

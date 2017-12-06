@@ -1,0 +1,34 @@
+App\Entity\Trick:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: name
+            message: "Ce nom est déjà utilisé"
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: slug
+            message: "Ce nom est déjà utilisé"
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                min: 3
+                max: 100
+                minMessage: "Le titre doit faire au minimum 3 caractères"
+                maxMessage: "Le titre doit faire au maximum 100 caractères"
+        slug:
+            - NotBlank: ~
+            - Length:
+                min: 3
+                max: 100
+                minMessage: "Le slug doit faire au minimum 3 caractères"
+                maxMessage: "Le slug doit faire au maximum 100 caractères"
+        description:
+            - NotBlank: ~
+        categories:
+            - Valid:
+                traverse: true
+        images:
+            - Valid:
+                traverse: true
+        videos:
+            - Valid:
+                traverse: true

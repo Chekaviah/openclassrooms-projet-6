@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Trick;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="video")
@@ -29,7 +28,6 @@ class Video
 	/**
 	 * @var string
 	 * @ORM\Column(name="website", type="string", length=255)
-	 * @Assert\Choice({"youtube", "dailymotion"})
 	 */
 	private $website;
 
