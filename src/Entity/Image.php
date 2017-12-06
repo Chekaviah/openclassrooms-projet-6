@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Service\Uploader;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Trick;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -10,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Table(name="image")
  * @ORM\Entity(repositoryClass="App\Repository\ImageRepository")
- * @ORM\HasLifecycleCallbacks
+ * @ORM\EntityListeners({"App\EventListener\ImageUploadListener"})
  */
 class Image
 {
@@ -24,17 +25,17 @@ class Image
 
 	/**
 	 * @var string
-	 * @ORM\Column(name="url", type="string", length=255)
+	 * @ORM\Column(name="name", type="string", length=255)
 	 * @Assert\NotBlank()
 	 */
-	private $url;
+	private $name;
 
 	/**
 	 * @var string
-	 * @ORM\Column(name="alt", type="string", length=255)
+	 * @ORM\Column(name="extension", type="string", length=255)
 	 * @Assert\NotBlank()
 	 */
-	private $alt;
+	private $extension;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="App\Entity\Trick", inversedBy="images")
@@ -48,119 +49,53 @@ class Image
 	 */
 	private $file;
 
+	/**
+	 * @var string
+	 */
 	private $tempFilename;
 
-
-
-	/**
-	 * @ORM\PrePersist()
-	 * @ORM\PreUpdate()
-	 */
-	public function preUpload()
+	public function __construct()
 	{
-		if ($this->file === null)
-			return;
-
-		$this->url = $this->file->guessExtension();
-		$this->alt = $this->file->getClientOriginalName();
-	}
-
-	/**
-	 * @ORM\PostPersist()
-	 * @ORM\PostUpdate()
-	 */
-	public function upload()
-	{
-		if ($this->file === null)
-			return;
-
-		if ($this->tempFilename !== null) {
-			$oldFile = $this->getUploadRootDir().'/'.$this->id.'.'.$this->tempFilename;
-			if (file_exists($oldFile))
-				unlink($oldFile);
-		}
-
-		$name = $this->file->getClientOriginalName();
-		$this->file->move(
-			$this->getUploadRootDir(),
-			$this->id.'.'.$this->url
-		);
-
-		$this->url = $name;
-		$this->alt = $name;
-	}
-
-	/**
-	 * @ORM\PreRemove()
-	 */
-	public function preRemoveUpload()
-	{
-		$this->tempFilename = $this->getUploadRootDir().'/'.$this->id.'.'.$this->url;
-	}
-
-	/**
-	 * @ORM\PostRemove()
-	 */
-	public function removeUpload()
-	{
-		if (file_exists($this->tempFilename))
-			unlink($this->tempFilename);
-	}
-
-	public function getUploadDir()
-	{
-		return 'uploads/img';
-	}
-
-	public function getUploadRootDir()
-	{
-		return __DIR__.'/../../public/'.$this->getUploadDir();
 	}
 
 	/**
 	 * @return int
 	 */
-	public function getId(): int
+	public function getId(): ?int
 	{
 		return $this->id;
 	}
 
 	/**
-	 * @param string $url
-	 * @return Image
+	 * @param string $name
 	 */
-	public function setUrl(string $url): Image
+	public function setName(string $name)
 	{
-		$this->url = $url;
-
-		return $this;
+		$this->name = $name;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getUrl(): ?string
+	public function getName(): ?string
 	{
-		return $this->url;
+		return $this->name;
 	}
 
 	/**
-	 * @param string $alt
-	 * @return Image
+	 * @param string $extension
 	 */
-	public function setAlt(string $alt): Image
+	public function setExtension(string $extension)
 	{
-		$this->alt = $alt;
-
-		return $this;
+		$this->extension = $extension;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getAlt(): ?string
+	public function getExtension(): ?string
 	{
-		return $this->alt;
+		return $this->extension;
 	}
 
 	/**
@@ -178,8 +113,8 @@ class Image
 	{
 		$this->file = $file;
 
-		if ($this->url !== null) {
-			$this->tempFilename = $this->url;
+		if ($this->extension !== null) {
+			$this->setTempFilename();
 
 			$this->url = null;
 			$this->alt = null;
@@ -188,13 +123,10 @@ class Image
 
 	/**
 	 * @param Trick $trick
-	 * @return Image
 	 */
-	public function setTrick(Trick $trick): Image
+	public function setTrick(Trick $trick)
 	{
 		$this->trick = $trick;
-
-		return $this;
 	}
 
 	/**
@@ -206,10 +138,41 @@ class Image
 	}
 
 	/**
+	 */
+	public function setTempFilename()
+	{
+		$this->tempFilename = $this->name.'.'.$this->extension;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTempFilename(): ?string
+	{
+		return $this->tempFilename;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getUploadDir(): string
+	{
+		return 'uploads/images';
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getUploadRootDir(): string
+	{
+		return __DIR__.'/../../public/'.$this->getUploadDir();
+	}
+
+	/**
 	 * @return string
 	 */
 	public function getPath(): ?string
 	{
-		return $this->getUploadDir().'/'.$this->getId().'.'.$this->getUrl();
+		return $this->getUploadDir().'/'.$this->getName().'.'.$this->getExtension();
 	}
 }

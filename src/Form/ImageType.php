@@ -27,8 +27,8 @@ class ImageType extends AbstractType
 				$form = $event->getForm();
 
 				if($image && $image->getId() !== null) {
-					$form->add('url', TextType::class);
-					$form->add('alt', TextType::class);
+					$form->add('name', TextType::class);
+					$form->add('extension', TextType::class);
 					$form->remove('file');
 				}
 			})
