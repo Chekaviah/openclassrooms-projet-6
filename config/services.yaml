@@ -2,6 +2,9 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    upload_directory: '%kernel.project_dir%/public/uploads/'
+    images_directory: '%kernel.project_dir%/public/uploads/images'
+    avatars_directory: '%kernel.project_dir%/public/uploads/avatars'
 
 services:
     # default configuration for services in *this* file
@@ -26,3 +29,19 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\EventListener\AvatarUploadListener:
+        arguments:
+            $directory: '%avatars_directory%'
+        tags:
+            - { name: doctrine.orm.entity_listener }
+
+    App\EventListener\ImageUploadListener:
+        arguments:
+            $directory: '%images_directory%'
+        tags:
+            - { name: doctrine.orm.entity_listener }
+
+    App\Service\Uploader:
+        arguments:
+            $targetDir: '%upload_directory%'

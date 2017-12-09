@@ -5,13 +5,10 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="category")
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
- * @UniqueEntity(fields={"name", "slug"})
  */
 class Category
 {
@@ -26,8 +23,6 @@ class Category
 	/**
 	 * @var string
 	 * @ORM\Column(name="name", type="string", length=255, unique=true)
-	 * @Assert\NotBlank()
-	 * @Assert\Length(max=100, maxMessage="Le titre doit faire au maximum {{limit}} caractères.")
 	 *
 	 */
 	private $name;
@@ -35,8 +30,6 @@ class Category
 	/**
 	 * @var string
 	 * @ORM\Column(name="slug", type="string", length=255, unique=true)
-	 * @Assert\NotBlank()
-	 * @Assert\Length(max=100, maxMessage="Le slug doit faire au maximum {{limit}} caractères.")
 	 */
 	private $slug;
 

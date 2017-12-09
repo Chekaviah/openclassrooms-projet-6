@@ -15,15 +15,15 @@ class CategoryController extends AbstractController
 {
     /**
 	 * @param Request $request
-     * @Route("/category/create", name="category_create")
+     * @Route("/category/create", methods={"GET","POST"}, name="category_create")
 	 * @return Response
      */
     public function createAction(Request $request)
     {
 		$category = new Category();
-		$form = $this->createForm(CategoryType::class, $category);
+		$form = $this->createForm(CategoryType::class, $category)->handleRequest($request);
 
-		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+		if ($form->isSubmitted() && $form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($category);
 			$em->flush();
@@ -36,13 +36,16 @@ class CategoryController extends AbstractController
     }
 
 	/**
-	 * @param Category $category
-	 * @Route("/category/view/{id}", requirements={"id": "\d+"}, name="category_view_id")
-	 * @Route("/category/view/{slug}", name="category_view")
+	 * @param string $slug
+	 * @Route("/category/view/{slug}", methods="GET", name="category_view")
 	 * @return Response
 	 */
-	public function viewAction(Category $category): Response
+	public function viewAction($slug): Response
 	{
+		$category = $this->getDoctrine()
+			->getRepository(Category::class)
+			->findOneBy(['slug' => $slug]);
+
 		$tricks = $category->getTricks();
 
 		return $this->render('category/view.html.twig', array(
@@ -52,11 +55,10 @@ class CategoryController extends AbstractController
 	}
 
 	/**
-	 * @param Request $request
-	 * @Route("/category/list", name="category_list")
+	 * @Route("/category/list", methods="GET", name="category_list")
 	 * @return Response
 	 */
-	public function listAction(Request $request): Response
+	public function listAction(): Response
 	{
 		$categories = $this->getDoctrine()
 			->getRepository(Category::class)
@@ -68,18 +70,25 @@ class CategoryController extends AbstractController
 	}
 
 	/**
-	 * @param Category $category
-	 * @Route("/category/delete/{id}", requirements={"id": "\d+"}, name="category_delete")
+	 * @param int $id
+	 * @Route("/category/delete/{id}", methods="GET", requirements={"id": "\d+"}, name="category_delete")
 	 * @return Response
 	 */
-	public function deleteAction(Request $request, Category $category): Response
+	public function deleteAction(Request $request, $id): Response
 	{
+		//TODO remove form
+		/** @var Category $category */
+		$category = $this->getDoctrine()
+			->getRepository(Category::class)
+			->find($id);
+
 		$em = $this->getDoctrine()->getManager();
 		/** @var Form $form */
 		$form = $this->get('form.factory')->create();
 
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 			foreach ($category->getTricks() as $trick) {
+				/** @var Trick $trick */
 				$trick->removeCategory($category);
 				$em->persist($trick);
 			}

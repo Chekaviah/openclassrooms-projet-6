@@ -7,14 +7,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Category;
 use App\Entity\Image;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping\JoinTable;
 
 /**
  * @ORM\Table(name="trick")
  * @ORM\Entity(repositoryClass="App\Repository\TrickRepository")
- * @UniqueEntity(fields={"name", "slug"})
  */
 class Trick
 {
@@ -29,23 +26,18 @@ class Trick
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", length=255, unique=true)
-	 * @Assert\NotBlank()
-	 * @Assert\Length(max=100, maxMessage="Le titre doit faire au maximum {{limit}} caractères.")
 	 */
 	private $name;
 
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", length=255, unique=true)
-	 * @Assert\NotBlank()
-	 * @Assert\Length(max=100, maxMessage="Le slug doit faire au maximum {{limit}} caractères.")
 	 */
 	private $slug;
 
 	/**
 	 * @var string
 	 * @ORM\Column(type="text", nullable=true)
-	 * @Assert\NotBlank()
 	 */
 	private $description;
 
@@ -58,13 +50,13 @@ class Trick
 
 	/**
 	 * @var Image[]|ArrayCollection
-	 * @ORM\OneToMany(targetEntity="App\Entity\Image", cascade={"persist", "remove"}, mappedBy="trick")
+	 * @ORM\OneToMany(targetEntity="App\Entity\Image", cascade={"persist", "remove", "refresh"}, mappedBy="trick", orphanRemoval=true)
 	 */
 	private $images;
 
 	/**
 	 * @var Video[]|ArrayCollection
-	 * @ORM\OneToMany(targetEntity="App\Entity\Video", cascade={"persist", "remove"}, mappedBy="trick")
+	 * @ORM\OneToMany(targetEntity="App\Entity\Video", cascade={"persist", "remove", "refresh"}, mappedBy="trick", orphanRemoval=true)
 	 */
 	private $videos;
 
@@ -203,7 +195,6 @@ class Trick
 	 */
 	public function removeVideo(Video $video)
 	{
-		/** @noinspection PhpUndefinedMethodInspection */
 		$this->videos->removeElement($video);
 	}
 

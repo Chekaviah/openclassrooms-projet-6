@@ -17,20 +17,19 @@ use Symfony\Component\HttpFoundation\Response;
 class TrickController extends AbstractController
 {
     /**
-     * @Route("/", name="trick")
+     * @Route("/", methods="GET", name="trick")
 	 * @return Response
      */
     public function index(): Response
     {
-        return new Response('Hello world!');
+        return new Response('<body>Hello world!</body>');
     }
 
 	/**
-	 * @param Request $request
-	 * @Route("/trick/list", name="trick_list")
+	 * @Route("/trick/list", methods="GET", name="trick_list")
 	 * @return Response
 	 */
-    public function listAction(Request $request): Response
+    public function listAction(): Response
 	{
 		$tricks = $this->getDoctrine()
 			->getRepository(Trick::class)
@@ -42,13 +41,16 @@ class TrickController extends AbstractController
 	}
 
 	/**
-	 * @param Trick $trick
-	 * @Route("/trick/{id}", requirements={"id": "\d+"}, name="trick_view_id")
-	 * @Route("/trick/{slug}", name="trick_view")
+	 * @param string $slug
+	 * @Route("/trick/view/{slug}", methods="GET", name="trick_view")
 	 * @return Response
 	 */
-	public function viewAction(Trick $trick): Response
+	public function viewAction($slug): Response
 	{
+		$trick = $this->getDoctrine()
+			->getRepository(Trick::class)
+			->findOneBy(['slug' => $slug]);
+
 		return $this->render('trick/view.html.twig', array(
 			'trick' => $trick
 		));
@@ -56,15 +58,15 @@ class TrickController extends AbstractController
 
 	/**
 	 * @param Request $request
-	 * @Route("/trick/create", name="trick_create")
+	 * @Route("/trick/create", methods={"GET","POST"}, name="trick_create")
 	 * @return Response
 	 */
 	public function createAction(Request $request): Response
 	{
 		$trick = new Trick();
-		$form = $this->createForm(TrickType::class, $trick);
+		$form = $this->createForm(TrickType::class, $trick)->handleRequest($request);
 
-		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+		if ($form->isSubmitted() && $form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($trick);
 			$em->flush();
@@ -77,54 +79,21 @@ class TrickController extends AbstractController
 	}
 
 	/**
+	 * @param int $id
 	 * @param Request $request
-	 * @param Trick $trick
-	 * @Route("/trick/edit/{id}", name="trick_edit")
+	 * @Route("/trick/edit/{id}", methods={"GET","POST"}, requirements={"id": "\d+"}, name="trick_edit")
 	 * @return Response
 	 */
-	public function editAction(Request $request, Trick $trick): Response
+	public function editAction(Request $request, $id): Response
 	{
-		$originalVideos = new ArrayCollection();
-		foreach ($trick->getVideos() as $video) {
-			$originalVideos->add($video);
-		}
+		$trick = $this->getDoctrine()
+			->getRepository(Trick::class)
+			->find($id);
 
-		$originalImages = new ArrayCollection();
-		foreach ($trick->getImages() as $image) {
-			$originalImages->add($image);
-		}
+		$form = $this->createForm(TrickEditType::class, $trick)->handleRequest($request);
 
-
-		$form = $this->createForm(TrickEditType::class, $trick);
-
-		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+		if ($form->isSubmitted() && $form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
-
-			// Delete videos
-			foreach ($originalVideos as $video) {
-				if ($trick->getVideos()->contains($video) === false) {
-					$em->remove($video);
-				}
-			}
-
-			// Add Videos
-			foreach ($trick->getVideos() as $video) {
-				if ($video->getTrick() === null)
-					$video->setTrick($trick);
-			}
-
-			// Delete images
-			foreach ($originalImages as $image) {
-				if ($trick->getImages()->contains($image) === false) {
-					$em->remove($image);
-				}
-			}
-
-			// Add images
-			foreach ($trick->getImages() as $image) {
-				if ($image->getTrick() === null)
-					$image->setTrick($trick);
-			}
 
 			$em->persist($trick);
 			$em->flush();
@@ -137,12 +106,18 @@ class TrickController extends AbstractController
 	}
 
 	/**
-	 * @param Trick $trick
-	 * @Route("/trick/delete/{id}", requirements={"id": "\d+"}, name="trick_delete")
+	 * @param int $id
+	 * @param Request $request
+	 * @Route("/trick/delete/{id}", methods="GET", requirements={"id": "\d+"}, name="trick_delete")
 	 * @return Response
 	 */
-	public function deleteAction(Request $request, Trick $trick): Response
+	public function deleteAction(Request $request, $id): Response
 	{
+		//TODO remove form
+		$trick = $this->getDoctrine()
+			->getRepository(Trick::class)
+			->find($id);
+
 		$em = $this->getDoctrine()->getManager();
 		/** @var Form $form */
 		$form = $this->get('form.factory')->create();

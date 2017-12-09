@@ -2,17 +2,15 @@
 
 namespace App\Entity;
 
-use App\Service\Uploader;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Trick;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * @ORM\Table(name="image")
- * @ORM\Entity(repositoryClass="App\Repository\ImageRepository")
- * @ORM\EntityListeners({"App\EventListener\ImageUploadListener"})
+ * @ORM\Table(name="avatar")
+ * @ORM\Entity(repositoryClass="App\Repository\AvatarRepository")
+ * @ORM\EntityListeners({"App\EventListener\AvatarUploadListener"})
  */
-class Image
+class Avatar
 {
     /**
 	 * @var int
@@ -35,12 +33,6 @@ class Image
 	private $extension;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="App\Entity\Trick", inversedBy="images")
-	 * @ORM\JoinColumn(nullable=false)
-	 */
-	private $trick;
-
-	/**
 	 * @var UploadedFile
 	 */
 	private $file;
@@ -49,10 +41,6 @@ class Image
 	 * @var string
 	 */
 	private $tempFilename;
-
-	public function __construct()
-	{
-	}
 
 	/**
 	 * @return int
@@ -118,22 +106,6 @@ class Image
 	}
 
 	/**
-	 * @param Trick $trick
-	 */
-	public function setTrick(Trick $trick)
-	{
-		$this->trick = $trick;
-	}
-
-	/**
-	 * @return Trick
-	 */
-	public function getTrick(): ?Trick
-	{
-		return $this->trick;
-	}
-
-	/**
 	 */
 	public function setTempFilename()
 	{
@@ -153,7 +125,7 @@ class Image
 	 */
 	public function getUploadDir(): string
 	{
-		return 'uploads/images';
+		return 'uploads/avatars';
 	}
 
 	/**

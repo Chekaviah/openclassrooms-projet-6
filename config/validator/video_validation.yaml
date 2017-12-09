@@ -1,0 +1,6 @@
+App\Entity\Video:
+    properties:
+        url:
+            - NotBlank: ~
+        website:
+            - Choice: [youtube, dailymotion]

@@ -1,0 +1,19 @@
+App\Entity\Category:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: name
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: slug
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                min: 3
+                max: 100
+                minMessage: 'Le titre doit faire au minimum 3 caractères'
+                maxMessage: "Le titre doit faire au maximum 100 caractères"
+        slug:
+            - NotBlank: ~
+            - Length:
+                min: 3
+                max: 100
+                minMessage: "Le slug doit faire au minimum 3 caractères"
+                maxMessage: "Le slug doit faire au maximum 100 caractères"
