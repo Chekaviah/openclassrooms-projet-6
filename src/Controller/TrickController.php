@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Entity\Trick;
 use App\Entity\Video;
+use App\Form\CommentType;
 use App\Form\TrickEditType;
 use App\Form\TrickType;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -45,14 +47,18 @@ class TrickController extends AbstractController
 	 * @Route("/trick/view/{slug}", methods="GET", name="trick_view")
 	 * @return Response
 	 */
-	public function viewAction($slug): Response
+	public function viewAction( $slug): Response
 	{
 		$trick = $this->getDoctrine()
 			->getRepository(Trick::class)
 			->findOneBy(['slug' => $slug]);
 
+		$comment = new Comment();
+		$form = $this->createForm(CommentType::class, $comment);
+
 		return $this->render('trick/view.html.twig', array(
-			'trick' => $trick
+			'trick' => $trick,
+			'form' => $form->createView()
 		));
 	}
 
