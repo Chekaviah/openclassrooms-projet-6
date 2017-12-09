@@ -131,9 +131,8 @@ class Trick
 
 	/**
 	 * @param Category $category
-	 * @return Trick
 	 */
-	public function addCategory(Category $category): Trick
+	public function addCategory(Category $category)
 	{
 		$this->categories[] = $category;
 	}
@@ -156,9 +155,8 @@ class Trick
 
 	/**
 	 * @param Image $image
-	 * @return Trick
 	 */
-	public function addImage(Image $image): Trick
+	public function addImage(Image $image)
 	{
 		$this->images[] = $image;
 		$image->setTrick($this);
@@ -182,9 +180,8 @@ class Trick
 
 	/**
 	 * @param Video $video
-	 * @return Trick
 	 */
-	public function addVideo(Video $video): Trick
+	public function addVideo(Video $video)
 	{
 		$this->videos[] = $video;
 		$video->setTrick($this);
@@ -208,9 +205,8 @@ class Trick
 
 	/**
 	 * @param Comment $comment
-	 * @return Trick
 	 */
-	public function addComment(Comment $comment): Trick
+	public function addComment(Comment $comment)
 	{
 		$this->comments[] = $comment;
 		$comment->setTrick($this);
