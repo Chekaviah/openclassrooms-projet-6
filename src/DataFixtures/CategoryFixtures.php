@@ -31,6 +31,8 @@ class CategoryFixtures extends Fixture
 			$category->setName($name);
 			$category->setSlug($slug);
 
+			$this->addReference('category-'.$slug, $category);
+
 			$manager->persist($category);
 		}
 

@@ -60,6 +60,12 @@ class Trick
 	 */
 	private $videos;
 
+	/**
+	 * @var Comment[]|ArrayCollection
+	 * @ORM\OneToMany(targetEntity="App\Entity\Comment", cascade={"persist", "remove", "refresh"}, mappedBy="trick", orphanRemoval=true)
+	 */
+	private $comments;
+
 	public function __construct()
 	{
 		$this->images = new ArrayCollection();
@@ -125,13 +131,10 @@ class Trick
 
 	/**
 	 * @param Category $category
-	 * @return Trick
 	 */
-	public function addCategory(Category $category): Trick
+	public function addCategory(Category $category)
 	{
 		$this->categories[] = $category;
-
-		return $this;
 	}
 
 	/**
@@ -152,14 +155,11 @@ class Trick
 
 	/**
 	 * @param Image $image
-	 * @return Trick
 	 */
-	public function addImage(Image $image): Trick
+	public function addImage(Image $image)
 	{
 		$this->images[] = $image;
 		$image->setTrick($this);
-
-		return $this;
 	}
 
 	/**
@@ -180,14 +180,11 @@ class Trick
 
 	/**
 	 * @param Video $video
-	 * @return Trick
 	 */
-	public function addVideo(Video $video): Trick
+	public function addVideo(Video $video)
 	{
 		$this->videos[] = $video;
 		$video->setTrick($this);
-
-		return $this;
 	}
 
 	/**
@@ -206,4 +203,28 @@ class Trick
 		return $this->videos;
 	}
 
+	/**
+	 * @param Comment $comment
+	 */
+	public function addComment(Comment $comment)
+	{
+		$this->comments[] = $comment;
+		$comment->setTrick($this);
+	}
+
+	/**
+	 * @param Video $video
+	 */
+	public function removeComment(Comment $comment)
+	{
+		$this->videos->removeElement($comment);
+	}
+
+	/**
+	 * @return Collection|Comment[]
+	 */
+	public function getComments(): ?Collection
+	{
+		return $this->comments;
+	}
 }
