@@ -28,16 +28,29 @@
                 <iframe width="560" height="315" src="{{ video.iframe }}" frameborder="0" allowfullscreen></iframe>
             {% endfor %}
         </p>
+
+    {% endif %}
+    {% if not trick.comments.empty %}
+        <div>
+            Commentaires :
+            {% for comment in trick.comments %}
+                <h5>{{ comment.user.username }} <small>{{ comment.date|date('Y-m-d H:i:s') }}</small></h5>
+                <p>{{ comment.content }}</p>
+            {% endfor %}
+        </div>
     {% endif %}
 
-    <h3>Ajouter un commentaire</h3>
-    <div class="well" id="add-form">
-        <form action="{{ path('comment_add', {'slug': trick.slug}) }}" method="post">
-        ---
-        {{ form_widget(form) }}
-        <input type="submit" value="Valider" class="btn btn-primary" />
-        {{ form_end(form) }}
-    </div>
+    {% if is_granted('ROLE_USER') %}
+        <h3>Ajouter un commentaire</h3>
+        <div class="well" id="add-form">
+            <form action="{{ path('comment_add', {'slug': trick.slug}) }}" method="post">
+                ---
+                {{ form_widget(form) }}
+                <input type="submit" value="Valider" class="btn btn-primary" />
+                {{ form_end(form) }}
+        </div>
 
-    <p><a href="{{ path('trick_edit', {'id': trick.id}) }}" class="btn btn-primary">Editer</a></p>
+        <p><a href="{{ path('trick_edit', {'id': trick.id}) }}" class="btn btn-primary">Editer</a></p>
+    {% endif %}
+
 {% endblock %}

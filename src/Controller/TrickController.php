@@ -18,17 +18,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TrickController extends AbstractController
 {
-    /**
-     * @Route("/", methods="GET", name="trick")
-	 * @return Response
-     */
-    public function index(): Response
-    {
-        return new Response('<body>Hello world!</body>');
-    }
-
 	/**
-	 * @Route("/trick/list", methods="GET", name="trick_list")
+	 * @Route("/", methods="GET", name="trick_list")
 	 * @return Response
 	 */
     public function listAction(): Response

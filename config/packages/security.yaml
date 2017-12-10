@@ -23,12 +23,12 @@ security:
             form_login:
                 login_path: security_login
                 check_path: security_login
-                default_target_path: trick
+                default_target_path: trick_list
                 use_referer: true
                 csrf_token_generator: security.csrf.token_manager
             logout:
                 path: security_logout
-                target: trick
+                target: trick_list
 
     access_control:
         - { path: ^/profile, roles: ROLE_USER }
