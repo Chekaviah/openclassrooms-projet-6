@@ -1,56 +1,121 @@
 {% extends "base.html.twig" %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('/css/trick.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('/js/app.js') }}"></script>
+{% endblock %}
+
+{% block modals %}
+    {{ parent() }}
+    {{ include('form/_delete_trick_confirmation.html.twig') }}
+{% endblock %}
+
 {% block body %}
-    <p>Id : {{ trick.id }}</p>
-    <p>Nom : {{ trick.name }}</p>
-    <p>Slug : {{ trick.slug }}</p>
-    <p>Description : {{ trick.description }}</p>
-    {% if not trick.categories.empty %}
-        <p>
-            Catégories :
-            {% for category in trick.categories %}
-                {{ category.name }}{% if not loop.last %}, {% endif %}
-            {% endfor %}
-        </p>
-    {% endif %}
-    {% if not trick.images.empty %}
-        <p>
-            Images :
-            {% for image in trick.images %}
-                <img src="{{ asset(image.path) }}">
-            {% endfor %}
-        </p>
-    {% endif %}
-    {% if not trick.videos.empty %}
-        <p>
-            Videos :
-            {% for video in trick.videos %}
-                <iframe width="560" height="315" src="{{ video.iframe }}" frameborder="0" allowfullscreen></iframe>
-            {% endfor %}
-        </p>
+    <section id="cover" class="cover">
+    </section>
 
-    {% endif %}
-    {% if not trick.comments.empty %}
-        <div>
-            Commentaires :
-            {% for comment in trick.comments %}
-                <h5>{{ comment.user.username }} <small>{{ comment.date|date('Y-m-d H:i:s') }}</small></h5>
-                <p>{{ comment.content }}</p>
-            {% endfor %}
+
+
+    <section class="trick-content mb-5">
+        <div class="container">
+            <div class="trick-thumbnail" style="background-image: url({{ asset(trick.thumbnail) }})">
+                <div class="trick-name">
+                    <b>{{ trick.name[0:1] }}</b>{{ trick.name[1:] }}
+                </div>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <div class="trick-action">
+                        <ul class="list-unstyled m-0 d-flex">
+                            <li class="action-edit">
+                                <a href="{{ path('trick_edit', {'id': trick.id}) }}" class="btn btn-secondary">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </li>
+                            <li class="action-delete">
+                                {{ include('form/_delete_trick_form.html.twig', {trick: trick}) }}
+                            </li>
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="trick">
+                <div class="trick-media px-4">
+                    <div class="row justify-content-center">
+                        {% if not trick.images.empty %}
+                            {% for image in trick.images %}
+                                <div class="col-xl-4 col-lg-6 col-md-6 px-3">
+                                    <div class="embed-responsive embed-responsive-16by9 media-image mt-4 mt-4" style="background-image: url({{ asset(image.path) }});">
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        {% if not trick.videos.empty %}
+                            {% for video in trick.videos %}
+                            <div class="col-xl-4 col-lg-6 col-md-6 px-3">
+                                <div class="embed-responsive embed-responsive-16by9 mt-4">
+                                        <iframe class="embed-responsive-item" src="{{ video.iframe }}" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="trick-description pt-4 px-4">
+                    <p class="text-justify">
+                        {{ trick.description }}
+                    </p>
+                </div>
+
+                <div class="trick-informations">
+                    <ul class="list-unstyled m-0 d-flex justify-content-center">
+                        <li class="mx-2">
+                            {% if not trick.categories.empty %}
+                                Catégories :
+                                {% for category in trick.categories %}
+                                    {{ category.name }}{% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <div class="trick-comment-form py-4 mx-4 mt-4">
+                        <div class="row justify-content-center">
+                            <div class="col-xl-7">
+                                {{ include('form/_add_comment_form.html.twig') }}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if not trick.comments.empty %}
+                    <div class="trick-comments pb-4 px-4">
+                        <div class="row justify-content-center">
+                            <div class="col-xl-7">
+                                <ul class="list-unstyled m-0">
+                                    {% for comment in trick.comments %}
+                                        <li class="comment-item media mt-4">
+                                            <img class="mr-3" src="https://dummyimage.com/64x64/4a4a4a/fff">
+                                            <div class="media-body">
+                                                <h5 class="mt-0 mb-1">{{ comment.user.username }} <small>{{ comment.date|date('Y-m-d H:i:s') }}</small></h5>
+                                                {{ comment.content }}
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
         </div>
-    {% endif %}
-
-    {% if is_granted('ROLE_USER') %}
-        <h3>Ajouter un commentaire</h3>
-        <div class="well" id="add-form">
-            <form action="{{ path('comment_add', {'slug': trick.slug}) }}" method="post">
-                ---
-                {{ form_widget(form) }}
-                <input type="submit" value="Valider" class="btn btn-primary" />
-                {{ form_end(form) }}
-        </div>
-
-        <p><a href="{{ path('trick_edit', {'id': trick.id}) }}" class="btn btn-primary">Editer</a></p>
-    {% endif %}
+    </section>
 
 {% endblock %}

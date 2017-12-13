@@ -227,4 +227,19 @@ class Trick
 	{
 		return $this->comments;
 	}
+
+	/**
+	 * @return string
+	 */
+	public function getThumbnail(): string
+	{
+		$path = '/img/thumbnail.jpg';
+
+		if(!$this->images->isEmpty()) {
+			$image = $this->images->first();
+			$path = $image->getPath();
+		}
+
+		return $path;
+	}
 }

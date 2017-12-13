@@ -1,0 +1,13 @@
+{{ form_start(form, {method: 'POST', action: path('comment_add', {'slug': trick.slug})}) }}
+    {{ form_errors(form) }}
+
+    {{ form_errors(form.content) }}
+    <div class="form-row {% if not form.content.vars.valid %}has-error{% endif %}">
+        <div class="col">
+            {{ form_widget(form.content, {attr: {rows: 1}}) }}
+        </div>
+        <div class="col-auto">
+            <input type="submit" value="Laisser un commentaire" class="btn btn-dark" />
+        </div>
+    </div>
+{{ form_end(form) }}

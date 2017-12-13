@@ -3,7 +3,16 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('/css/home.css') }}">
+{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('/js/app.js') }}"></script>
+{% endblock %}
+
+{% block modals %}
+    {{ parent() }}
+    {{ include('form/_delete_trick_confirmation.html.twig') }}
 {% endblock %}
 
 {% block body %}
@@ -31,9 +40,11 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-xs-12">
                             <div class="trick-item">
                                 <div class="trick-image">
-                                    <a href="{{ path('trick_view', {'slug': trick.slug}) }}">
-                                        <img src="https://dummyimage.com/480x270/4a4a4a/fff">
-                                    </a>
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <a class="embed-responsive-item" href="{{ path('trick_view', {'slug': trick.slug}) }}">
+                                            <img src="{{ asset(trick.thumbnail) }}">
+                                        </a>
+                                    </div>
                                 </div>
                                 <div class="trick-name">
                                     <ul class="flex-row">
@@ -44,14 +55,12 @@
                                         </li>
                                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                                             <li class="action edit">
-                                                <a href="">
+                                                <a href="{{ path('trick_edit', {'id': trick.id}) }}">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
                                             </li>
                                             <li class="action delete">
-                                                <a href="">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
+                                                {{ include('form/_delete_trick_form.html.twig', {trick: trick}) }}
                                             </li>
                                         {% endif %}
                                     </ul>
@@ -59,7 +68,6 @@
                             </div>
                         </div>
                     {% endfor %}
-                    <p><a href="{{ path('trick_create') }}" class="btn btn-primary">Ajouter</a></p>
                 </div>
             </div>
         </div>
