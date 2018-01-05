@@ -18,17 +18,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TrickController extends AbstractController
 {
-    /**
-     * @Route("/", methods="GET", name="trick")
-	 * @return Response
-     */
-    public function index(): Response
-    {
-        return new Response('<body>Hello world!</body>');
-    }
-
 	/**
-	 * @Route("/trick/list", methods="GET", name="trick_list")
+	 * @Route("/", methods="GET", name="trick_list")
 	 * @return Response
 	 */
     public function listAction(): Response
@@ -96,7 +87,7 @@ class TrickController extends AbstractController
 			->getRepository(Trick::class)
 			->find($id);
 
-		$form = $this->createForm(TrickEditType::class, $trick)->handleRequest($request);
+		$form = $this->createForm(TrickType::class, $trick)->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
@@ -107,6 +98,7 @@ class TrickController extends AbstractController
 		}
 
 		return $this->render('trick/edit.html.twig', array(
+			'trick' => $trick,
 			'form' => $form->createView()
 		));
 	}
@@ -114,32 +106,25 @@ class TrickController extends AbstractController
 	/**
 	 * @param int $id
 	 * @param Request $request
-	 * @Route("/trick/delete/{id}", methods="GET", requirements={"id": "\d+"}, name="trick_delete")
+	 * @Route("/trick/delete/{id}", methods="POST", requirements={"id": "\d+"}, name="trick_delete")
 	 * @return Response
 	 */
 	public function deleteAction(Request $request, $id): Response
 	{
-		//TODO remove form
 		$trick = $this->getDoctrine()
 			->getRepository(Trick::class)
 			->find($id);
 
-		$em = $this->getDoctrine()->getManager();
-		/** @var Form $form */
-		$form = $this->get('form.factory')->create();
-
-		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-			$em->remove($trick);
-			$em->flush();
-
-			$this->addFlash('info', "Le trick a bien été supprimé.");
-
-			return $this->redirectToRoute('trick_list');
+		if (!$this->isCsrfTokenValid('delete', $request->request->get('token'))) {
+			return $this->redirectToRoute('trick_view', array('slug' => $trick->getSlug()));
 		}
 
-		return $this->render('trick/delete.html.twig', array(
-			'trick' => $trick,
-			'form' => $form->createView()
-		));
+		$em = $this->getDoctrine()->getManager();
+		$em->remove($trick);
+		$em->flush();
+
+		$this->addFlash('success', "Le trick a bien été supprimé.");
+
+		return $this->redirectToRoute('trick_list');
 	}
 }

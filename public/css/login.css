@@ -1,0 +1,39 @@
+/* Login - Cover */
+
+.cover {
+	display: table;
+	height: calc(100% - 112px);
+	min-height: calc(100% - 112px);
+	width: 100%;
+}
+
+.cover-inner {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.login h3,
+.register h3 {
+	margin-bottom: 2rem;
+}
+
+.register p {
+	margin-top: 1rem;
+}
+
+.login-inner,
+.register-inner {
+	background-color: #f8f9fa;
+	padding: 1rem;
+	border-radius: 0.2rem;
+}
+
+.login-inner label,
+.register-inner label {
+	font-weight: bold;
+}
+
+.alert-dismissible .close {
+	line-height: 1.2rem;
+}

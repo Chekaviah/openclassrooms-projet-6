@@ -41,4 +41,26 @@ class CommentController extends AbstractController
 
 		return $this->redirectToRoute('trick_view', array('slug' => $trick->getSlug()));
 	}
+
+	/**
+	 * @param Request $request
+	 * @param int $id
+	 * @Route("/comment/{id}", requirements={"id": "\d+"}, methods={"POST"}, name="comment_delete")
+	 * @return Response
+	 */
+	public function deleteAction(Request $request, $id): Response
+	{
+		$comment = $this->getDoctrine()
+			->getRepository(Comment::class)
+			->find($id);
+
+		if (!$this->isCsrfTokenValid('comment_delete', $request->request->get('token')))
+			return $this->redirectToRoute('trick_view', array('slug' => $comment->getTrick()->getSlug()));
+
+		$em = $this->getDoctrine()->getManager();
+		$em->remove($comment);
+		$em->flush();
+
+		return $this->redirectToRoute('trick_view', array('slug' => $comment->getTrick()->getSlug()));
+	}
 }

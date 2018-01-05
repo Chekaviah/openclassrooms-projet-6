@@ -4,7 +4,7 @@
 /var/
 /vendor/
 /src/Migrations/
-/public/
+/public/uploads/
 ###< symfony/framework-bundle ###
 ###> symfony/phpunit-bridge ###
 .phpunit

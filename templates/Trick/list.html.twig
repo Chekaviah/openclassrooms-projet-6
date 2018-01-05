@@ -1,12 +1,86 @@
 {% extends "base.html.twig" %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('/css/home.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('/js/app.js') }}"></script>
+{% endblock %}
+
+{% block modals %}
+    {{ parent() }}
+    {{ include('form/_delete_trick_confirmation.html.twig') }}
+{% endblock %}
+
 {% block body %}
-    {% for trick in tricks %}
-        <p>
-            <a href="{{ path('trick_view', {'slug': trick.slug}) }}">
-                {{ trick.name }}
-            </a>
-        </p>
-    {% endfor %}
-    <p><a href="{{ path('trick_create') }}" class="btn btn-primary">Ajouter</a></p>
+    <section id="cover" class="cover">
+        <div class="cover-inner">
+            <div class="cover-catch">
+                <b>E</b>at<br>
+                <b>R</b>ide<br>
+                <b>S</b>leep<br>
+                <b>R</b>epeat<br>
+            </div>
+            <div class="cover-goto">
+                <a href="#trick_list">
+                    <i class="fas fa-arrow-alt-circle-down"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="trick_list">
+        <div class="container-fluid">
+            <div class="trick-list">
+                <div class="row">
+                    {% for trick in tricks %}
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-xs-12 {% if loop.index >= 13 %}hidden-trick{% endif %}">
+                            <div class="trick-item">
+                                <div class="trick-image">
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <a class="embed-responsive-item" href="{{ path('trick_view', {'slug': trick.slug}) }}">
+                                            <img src="{{ asset(trick.thumbnail) }}">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="trick-name">
+                                    <ul class="flex-row">
+                                        <li class="name">
+                                            <a href="{{ path('trick_view', {'slug': trick.slug}) }}">
+                                                {{ trick.name }}
+                                            </a>
+                                        </li>
+                                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                            <li class="action edit">
+                                                <a href="{{ path('trick_edit', {'id': trick.id}) }}">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            </li>
+                                            <li class="action delete">
+                                                {{ include('form/_delete_trick_form.html.twig', {trick: trick}) }}
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                {% if tricks|length > 12 %}
+                    <div class="text-center">
+                        <button class="btn btn-info" onclick="this.remove(); $('.hidden-trick').show(); $('.trick-goto a').show();">Voir plus</button>
+                    </div>
+                    <div class="trick-goto text-right">
+                        <a href="#top">
+                            <i class="fas fa-arrow-alt-circle-up"></i>
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
 {% endblock %}
