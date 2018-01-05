@@ -96,3 +96,14 @@
 	color: #dc3545;
 	padding: 0.55rem;
 }
+
+.hidden-trick {
+	display: none;
+}
+
+.trick-goto a {
+	font-size: 2.5rem;
+	color: #525252;
+	text-shadow: 0 0.1rem 0 #ffffff;
+	display: none;
+}

@@ -157,3 +157,7 @@
 .trick-comment-form textarea {
 	overflow: hidden;
 }
+
+.hidden-comment {
+	display: none;
+}

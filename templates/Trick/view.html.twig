@@ -99,7 +99,7 @@
                             <div class="col-xl-7">
                                 <ul class="list-unstyled m-0">
                                     {% for comment in trick.comments %}
-                                        <li class="comment-item media mt-4">
+                                        <li class="comment-item media mt-4 {% if loop.index >= 6 %}hidden-comment{% endif %}">
                                             <img class="mr-3" src="https://dummyimage.com/64x64/4a4a4a/fff">
                                             <div class="media-body">
                                                 <h5 class="mt-0 mb-1">{{ comment.user.username }} <small>{{ comment.date|date('Y-m-d H:i:s') }}</small></h5>
@@ -110,6 +110,12 @@
                                 </ul>
                             </div>
                         </div>
+
+                        {% if trick.comments|length > 5 %}
+                            <div class="text-center">
+                                <button class="btn btn-info mt-4" onclick="this.remove(); $('.hidden-comment').css('display', 'flex');">Voir plus</button>
+                            </div>
+                        {% endif %}
                     </div>
                 {% endif %}
             </div>
