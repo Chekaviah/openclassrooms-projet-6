@@ -140,7 +140,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @return boolean
 	 */
-	public function getIsActive(): ?boolean
+	public function getIsActive()
 	{
 		return $this->isActive;
 	}

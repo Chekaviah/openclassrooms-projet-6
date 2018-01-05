@@ -15,7 +15,7 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-lg navbar-expand-md navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-expand-md navbar-light bg-light d-none d-sm-flex">
             <a class="navbar-brand" href="{{ path('trick_list') }}"><b>SnowTricks</b></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -24,7 +24,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('trick_list') }}">Accueil <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="{{ path('trick_list') }}">Accueil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('trick_list') }}#trick_list">Tricks</a>
@@ -45,6 +45,26 @@
                         </li>
                     {% endif %}
                 </ul>
+            </div>
+        </nav>
+
+        <nav class="navbar navbar-light bg-light fixed-bottom d-block d-sm-none">
+            <div class="row text-center">
+                <div class="nav-item active col">
+                    <a class="nav-link" href="{{ path('trick_list') }}"><i class="fas fa-home"></i></a>
+                </div>
+                <div class="nav-item col">
+                    <a class="nav-link" href="{{ path('trick_list') }}#trick_list"><i class="fas fa-bookmark"></i></a>
+                </div>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <div class="nav-item col">
+                        <a class="nav-link logout" href="{{ path('security_logout') }}"><i class="fas fa-sign-out-alt"></i></a>
+                    </div>
+                {% else %}
+                    <div class="nav-item col">
+                        <a class="nav-link" href="{{ path('security_register') }}"><i class="fas fa-sign-in-alt"></i></a>
+                    </div>
+                {% endif %}
             </div>
         </nav>
 
