@@ -21,12 +21,9 @@
 
 
 
-    <section class="trick-content mb-5">
+    <section class="trick-content mb-3 mb-sm-5 pt-3 pt-sm-5">
         <div class="container">
             <div class="trick-thumbnail" style="background-image: url({{ asset(trick.thumbnail) }})">
-                <div class="trick-name">
-                    <span>{{ trick.name }}</span>
-                </div>
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <div class="trick-action">
                         <div class="action-edit text-center">
@@ -41,7 +38,15 @@
                 {% endif %}
             </div>
             <div class="trick pb-4">
-                <div class="trick-media px-4">
+                <div class="trick-name text-left text-sm-center">
+                    <span>{{ trick.name }}</span>
+                </div>
+                {% if not trick.images.empty %}
+                    <div class="d-block d-sm-none text-center">
+                        <button class="btn btn-info mt-4" onclick="this.remove(); $('.trick-media').removeClass('d-none');">Voir les médias</button>
+                    </div>
+                {% endif %}
+                <div class="trick-media px-4 d-none d-sm-block">
                     <div class="row justify-content-center">
                         {% if not trick.images.empty %}
                             {% for image in trick.images %}

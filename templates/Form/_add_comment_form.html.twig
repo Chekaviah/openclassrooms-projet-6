@@ -2,11 +2,11 @@
     {{ form_errors(form) }}
 
     {{ form_errors(form.content) }}
-    <div class="form-row {% if not form.content.vars.valid %}has-error{% endif %}">
-        <div class="col">
+    <div class="form-row text-center text-sm-left {% if not form.content.vars.valid %}has-error{% endif %}">
+        <div class="col-12 col-sm mb-2 mb-sm-0">
             {{ form_widget(form.content, {attr: {rows: 1}}) }}
         </div>
-        <div class="col-auto">
+        <div class="col-12 col-sm-auto">
             <input type="submit" value="Laisser un commentaire" class="btn btn-dark" />
         </div>
     </div>

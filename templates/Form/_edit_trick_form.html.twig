@@ -1,6 +1,9 @@
 {{ form_start(form, {action: path('trick_edit', {'id': trick.id})}) }}
 
-    <div class="trick-media px-4 pt-2">
+    <div class="d-block d-sm-none text-center">
+        <button class="btn btn-info mt-4" onclick="this.remove(); $('.trick-media').removeClass('d-none');">Voir les médias</button>
+    </div>
+    <div class="trick-media d-none d-sm-block px-4 pt-2">
         <div class="row" id="trick-media">
             {% for image in form.images %}
                 {% if image.name is defined %}
