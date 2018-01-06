@@ -3,8 +3,7 @@
 namespace App\Controller;
 
 
-use App\Entity\User;
-use App\Form\ProfileType;
+use App\Form\Type\ProfileType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +27,7 @@ class UserController extends AbstractController
 
 			$em->persist($user);
 			$em->flush();
-			return $this->redirectToRoute('trick');
+			return $this->redirectToRoute('trick_list');
 		}
 
 		return $this->render('User/profile.html.twig', array(

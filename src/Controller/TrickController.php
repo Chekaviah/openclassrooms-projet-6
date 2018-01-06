@@ -2,17 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
 use App\Entity\Comment;
 use App\Entity\Trick;
-use App\Entity\Video;
-use App\Form\CommentType;
-use App\Form\TrickEditType;
-use App\Form\TrickType;
-use Doctrine\Common\Collections\ArrayCollection;
+use App\Form\Type\CommentType;
+use App\Form\Type\TrickType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

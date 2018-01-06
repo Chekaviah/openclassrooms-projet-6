@@ -8,7 +8,6 @@
 ###< symfony/framework-bundle ###
 ###> symfony/phpunit-bridge ###
 .phpunit
-/.idea
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 

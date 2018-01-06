@@ -36,7 +36,7 @@ class AvatarUploadListener
 	 * @ORM\PrePersist
 	 * @ORM\PreUpdate
 	 */
-	public function prePersistHandler(Avatar $avatar, LifecycleEventArgs $event)
+	public function prePersistHandler(Avatar $avatar)
 	{
 		if(!$avatar instanceof Avatar)
 			return;
@@ -56,7 +56,7 @@ class AvatarUploadListener
 	 * @ORM\PostPersist()
 	 * @ORM\PostUpdate()
 	 */
-	public function postPersistHandler(Avatar $avatar, LifecycleEventArgs $event)
+	public function postPersistHandler(Avatar $avatar)
 	{
 		if(!$avatar instanceof Avatar)
 			return;
@@ -76,7 +76,7 @@ class AvatarUploadListener
 	 * @param LifecycleEventArgs $event
 	 * @ORM\PreRemove()
 	 */
-	public function preRemoveHandler(Avatar $avatar, LifecycleEventArgs $event)
+	public function preRemoveHandler(Avatar $avatar)
 	{
 		if(!$avatar instanceof Avatar)
 			return;
@@ -89,7 +89,7 @@ class AvatarUploadListener
 	 * @param LifecycleEventArgs $event
 	 * @ORM\PostRemove()
 	 */
-	public function postRemoveHandler(Avatar $avatar, LifecycleEventArgs $event)
+	public function postRemoveHandler(Avatar $avatar)
 	{
 		if(!$avatar instanceof Avatar)
 			return;

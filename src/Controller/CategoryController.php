@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Trick;
-use App\Form\CategoryType;
+use App\Form\Type\CategoryType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Form;
@@ -76,7 +76,6 @@ class CategoryController extends AbstractController
 	 */
 	public function deleteAction(Request $request, $id): Response
 	{
-		//TODO remove form
 		/** @var Category $category */
 		$category = $this->getDoctrine()
 			->getRepository(Category::class)

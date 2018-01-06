@@ -36,7 +36,7 @@ class ImageUploadListener
 	 * @ORM\PrePersist
 	 * @ORM\PreUpdate
 	 */
-	public function prePersistHandler(Image $image, LifecycleEventArgs $event)
+	public function prePersistHandler(Image $image)
 	{
 		$extension = $this->uploader->getExtension($image->getFile());
 
@@ -50,7 +50,7 @@ class ImageUploadListener
 	 * @ORM\PostPersist()
 	 * @ORM\PostUpdate()
 	 */
-	public function postPersistHandler(Image $image, LifecycleEventArgs $event)
+	public function postPersistHandler(Image $image)
 	{
 		if ($image->getTempFilename() !== null) {
 			$oldFile = $this->directory.'/'.$image->getTempFilename();
@@ -67,7 +67,7 @@ class ImageUploadListener
 	 * @param LifecycleEventArgs $event
 	 * @ORM\PreRemove()
 	 */
-	public function preRemoveHandler(Image $image, LifecycleEventArgs $event)
+	public function preRemoveHandler(Image $image)
 	{
 		$image->setTempFilename();
 	}
@@ -77,7 +77,7 @@ class ImageUploadListener
 	 * @param LifecycleEventArgs $event
 	 * @ORM\PostRemove()
 	 */
-	public function postRemoveHandler(Image $image, LifecycleEventArgs $event)
+	public function postRemoveHandler(Image $image)
 	{
 		if (file_exists($this->directory.'/'.$image->getTempFilename()))
 			unlink($this->directory.'/'.$image->getTempFilename());
