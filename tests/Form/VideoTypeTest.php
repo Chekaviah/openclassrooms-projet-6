@@ -4,7 +4,7 @@ namespace App\Tests\Form;
 
 
 use App\Entity\Video;
-use App\Form\VideoType;
+use App\Form\Type\VideoType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 class VideoTypeTest extends TypeTestCase

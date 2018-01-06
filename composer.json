@@ -1,4 +1,6 @@
 {
+    "name": "chekaviah/openclassrooms-projet-6",
+    "description": "SnowTricks, the community website for snowboarding",
     "type": "project",
     "license": "proprietary",
     "require": {

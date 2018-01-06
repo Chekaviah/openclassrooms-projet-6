@@ -4,7 +4,7 @@ namespace App\Tests\Form;
 
 
 use App\Entity\Category;
-use App\Form\CategoryType;
+use App\Form\Type\CategoryType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 class CategoryTypeTest extends TypeTestCase
