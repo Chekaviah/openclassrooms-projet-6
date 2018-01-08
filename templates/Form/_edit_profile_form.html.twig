@@ -1,0 +1,30 @@
+{{ form_start(form, {action: path('user_profile')}) }}
+
+<div class="pt-2">
+    <li class="profile-edit media d-block d-sm-flex">
+        <img class="mr-3 rounded img-thumbnail d-block" src="{{ asset(app.user.avatarPath) }}">
+        <button class="btn btn-sm btn-dark avatar-edit" id="avatar-edit">Changer d'avatar</button>
+        <div class="media-body">
+            <div class="avatar-input">
+                {{ form_widget(form.avatar) }}
+                <hr>
+            </div>
+            <div class="row">
+                <div class="col-xl-6">
+                    {{ form_row(form.username) }}
+                </div>
+                <div class="col-xl-6">
+                    {{ form_row(form.email) }}
+                </div>
+            </div>
+            <div class="d-none">
+                {{ form_rest(form) }}
+            </div>
+            <input type="submit" value="Enregistrer" class="btn btn-dark" />
+        </div>
+    </li>
+    {{ form_errors(form) }}
+
+</div>
+
+{{ form_end(form) }}

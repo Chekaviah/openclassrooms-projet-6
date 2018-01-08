@@ -56,7 +56,8 @@ class User implements UserInterface, \Serializable
 
 	/**
 	 * @var Avatar
-	 * @ORM\OneToOne(targetEntity="App\Entity\Avatar", cascade={"persist", "remove", "refresh"})
+	 * @ORM\OneToOne(targetEntity="App\Entity\Avatar", cascade={"persist", "remove", "refresh"}, orphanRemoval=true)
+	 * @ORM\JoinColumn(nullable=true)
 	 */
 	private $avatar;
 

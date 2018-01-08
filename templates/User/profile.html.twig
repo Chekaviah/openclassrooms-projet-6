@@ -1,11 +1,26 @@
 {% extends "base.html.twig" %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('/css/profile.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('/js/app.js') }}"></script>
+    <script src="{{ asset('/js/profile.js') }}"></script>
+{% endblock %}
+
 {% block body %}
-    <h3>Editer mon profil</h3>
-    <div class="well" id="edit-form">
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Valider" class="btn btn-primary" />
-        {{ form_end(form) }}
-    </div>
+    <section id="cover" class="cover d-none d-sm-block">
+    </section>
+
+    <section class="profile-content mb-3 mb-sm-5 pt-3 pt-sm-5">
+        <div class="container">
+            <div class="profile p-4">
+                <h4>Editer mon profil</h4>
+                {{ include('form/_edit_profile_form.html.twig') }}
+            </div>
+        </div>
+    </section>
 {% endblock %}
