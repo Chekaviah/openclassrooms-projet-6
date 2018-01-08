@@ -199,6 +199,19 @@ class User implements UserInterface, \Serializable
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getAvatarPath(): ?string
+	{
+		$path = '/img/avatar.jpg';
+
+		if(!is_null($this->avatar))
+			$path = $this->avatar->getPath();
+
+		return $path;
+	}
+
+	/**
 	 *
 	 */
 	public function eraseCredentials()
