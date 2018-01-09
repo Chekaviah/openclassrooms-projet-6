@@ -56,7 +56,8 @@ class User implements UserInterface, \Serializable
 
 	/**
 	 * @var Avatar
-	 * @ORM\OneToOne(targetEntity="App\Entity\Avatar", cascade={"persist", "remove", "refresh"})
+	 * @ORM\OneToOne(targetEntity="App\Entity\Avatar", cascade={"persist", "remove", "refresh"}, orphanRemoval=true)
+	 * @ORM\JoinColumn(nullable=true)
 	 */
 	private $avatar;
 
@@ -196,6 +197,19 @@ class User implements UserInterface, \Serializable
 	public function setAvatar($avatar)
 	{
 		$this->avatar = $avatar;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getAvatarPath(): ?string
+	{
+		$path = '/img/avatar.jpg';
+
+		if(!is_null($this->avatar))
+			$path = $this->avatar->getPath();
+
+		return $path;
 	}
 
 	/**

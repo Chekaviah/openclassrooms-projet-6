@@ -5,6 +5,7 @@ namespace App\Form\Type;
 use App\Entity\Avatar;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -20,19 +21,20 @@ class AvatarType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-			->add('file', FileType::class)
+			->add('file', FileType::class, array(
+				'required' => false,
+				'label' => 'Avatar'
+			))
 			->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
 				$avatar = $event->getData();
 				$form = $event->getForm();
 
 				if($avatar && $avatar->getId() !== null) {
-					$form->add('name', TextType::class);
-					$form->add('extension', TextType::class);
-					$form->remove('file');
+					$form->add('name', HiddenType::class);
+					$form->add('extension', HiddenType::class);
 				}
 			})
 		;
-
 	}
 
 	/**
@@ -41,7 +43,7 @@ class AvatarType extends AbstractType
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults([
-			'data_class' => Avatar::class,
+			'data_class' => Avatar::class
 		]);
 	}
 }

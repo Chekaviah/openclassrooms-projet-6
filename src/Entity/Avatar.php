@@ -53,7 +53,7 @@ class Avatar
 	/**
 	 * @param string $name
 	 */
-	public function setName(string $name)
+	public function setName($name)
 	{
 		$this->name = $name;
 	}
@@ -69,7 +69,7 @@ class Avatar
 	/**
 	 * @param string $extension
 	 */
-	public function setExtension(string $extension)
+	public function setExtension($extension)
 	{
 		$this->extension = $extension;
 	}
