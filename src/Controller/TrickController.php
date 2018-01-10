@@ -21,7 +21,7 @@ class TrickController extends AbstractController
 	{
 		$tricks = $this->getDoctrine()
 			->getRepository(Trick::class)
-			->findAll();
+			->findAllWithData();
 
 		return $this->render('trick/list.html.twig', array(
 			'tricks' => $tricks
@@ -37,7 +37,7 @@ class TrickController extends AbstractController
 	{
 		$trick = $this->getDoctrine()
 			->getRepository(Trick::class)
-			->findOneBy(['slug' => $slug]);
+			->findOneBySlugWithData($slug);
 
 		$comment = new Comment();
 		$form = $this->createForm(CommentType::class, $comment);
@@ -80,7 +80,7 @@ class TrickController extends AbstractController
 	{
 		$trick = $this->getDoctrine()
 			->getRepository(Trick::class)
-			->find($id);
+			->findOneByIdWithData($id);
 
 		$form = $this->createForm(TrickType::class, $trick)->handleRequest($request);
 

@@ -32,7 +32,7 @@ class Comment
 	private $content;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="App\Entity\User")
+	 * @ORM\ManyToOne(targetEntity="App\Entity\User", fetch="EAGER")
 	 * @ORM\JoinColumn(nullable=false)
 	 */
 	private $user;
