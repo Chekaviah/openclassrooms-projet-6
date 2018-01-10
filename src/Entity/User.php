@@ -3,13 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User implements UserInterface, \Serializable
+class User implements AdvancedUserInterface, \Serializable
 {
     /**
 	 * @var int
@@ -46,13 +46,19 @@ class User implements UserInterface, \Serializable
 	 * @var boolean
 	 * @ORM\Column(name="is_active", type="boolean")
 	 */
-	private $isActive;
+	private $isActive = false;
 
 	/**
 	 * @var array
 	 * @ORM\Column(name="roles", type="json")
 	 */
 	private $roles = [];
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", length=64, nullable=true)
+	 */
+	private $token;
 
 	/**
 	 * @var Avatar
@@ -63,7 +69,6 @@ class User implements UserInterface, \Serializable
 
 	public function __construct()
 	{
-		$this->isActive = true;
 	}
 
 	/**
@@ -178,6 +183,22 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @return string
 	 */
+	public function getToken(): ?string
+	{
+		return $this->token;
+	}
+
+	/**
+	 * @param string $token
+	 */
+	public function setToken($token)
+	{
+		$this->token = $token;
+	}
+
+	/**
+	 * @return string
+	 */
 	public function getSalt(): ?string
 	{
 		return null;
@@ -228,6 +249,7 @@ class User implements UserInterface, \Serializable
 			$this->id,
 			$this->username,
 			$this->password,
+			$this->isActive
 		));
 	}
 
@@ -240,6 +262,39 @@ class User implements UserInterface, \Serializable
 			$this->id,
 			$this->username,
 			$this->password,
+			$this->isActive
 			) = unserialize($serialized);
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isAccountNonExpired()
+	{
+		return true;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isAccountNonLocked()
+	{
+		return true;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isCredentialsNonExpired()
+	{
+		return true;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isEnabled()
+	{
+		return $this->isActive;
 	}
 }
