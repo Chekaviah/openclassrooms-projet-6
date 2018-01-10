@@ -56,7 +56,7 @@ class User implements UserInterface, \Serializable
 
 	/**
 	 * @var Avatar
-	 * @ORM\OneToOne(targetEntity="App\Entity\Avatar", cascade={"persist", "remove", "refresh"}, orphanRemoval=true)
+	 * @ORM\OneToOne(targetEntity="App\Entity\Avatar", cascade={"persist", "remove", "refresh"}, fetch="EAGER", orphanRemoval=true)
 	 * @ORM\JoinColumn(nullable=true)
 	 */
 	private $avatar;
@@ -141,7 +141,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @return boolean
 	 */
-	public function getIsActive()
+	public function getActive()
 	{
 		return $this->isActive;
 	}
@@ -149,7 +149,7 @@ class User implements UserInterface, \Serializable
 	/**
 	 * @param boolean $isActive
 	 */
-	public function setIsActive($isActive)
+	public function setActive($isActive)
 	{
 		$this->isActive = $isActive;
 	}

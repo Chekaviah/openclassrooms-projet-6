@@ -18,7 +18,7 @@ class SecurityController extends AbstractController
 	 * @Route("/login", methods={"GET", "POST"}, name="security_login")
 	 * @return Response
 	 */
-	public function loginAction(Request $request, AuthenticationUtils $authUtils): Response
+	public function loginAction(AuthenticationUtils $authUtils): Response
 	{
 		$error = $authUtils->getLastAuthenticationError();
 
@@ -49,7 +49,7 @@ class SecurityController extends AbstractController
 			$em->persist($user);
 			$em->flush();
 
-			return $this->redirectToRoute('user_login');
+			return $this->redirectToRoute('security_login');
 		}
 
 		return $this->render('Security/register.html.twig', array(
