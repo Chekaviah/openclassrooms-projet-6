@@ -31,9 +31,9 @@ security:
                 target: trick_list
 
     access_control:
-        - { path: ^/profile, roles: ROLE_USER }
-        - { path: ^/trick/create, roles: ROLE_USER }
-        - { path: ^/trick/edit, roles: ROLE_USER }
-        - { path: ^/trick/delete, roles: ROLE_USER }
-        - { path: ^/category/create, roles: ROLE_USER }
-        - { path: ^/category/delete, roles: ROLE_USER }
+        - { path: ^/profile,          roles: ROLE_USER }
+        - { path: ^/trick/create,     roles: ROLE_USER }
+        - { path: ^/trick/edit,       roles: ROLE_USER }
+        - { path: ^/trick/delete,     roles: ROLE_USER }
+        - { path: ^/category/create,  roles: ROLE_USER }
+        - { path: ^/category/delete,  roles: ROLE_USER }

@@ -18,7 +18,8 @@
 	margin-bottom: 2rem;
 }
 
-.register p {
+.register p,
+.login p {
 	margin-top: 1rem;
 }
 

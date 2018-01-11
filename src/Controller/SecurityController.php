@@ -5,6 +5,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Event\UserCreatedEvent;
+use App\Event\UserResetPasswordEvent;
+use App\Form\Type\LostPasswordType;
+use App\Form\Type\ResetPasswordType;
 use App\Form\Type\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -47,7 +50,7 @@ class SecurityController extends AbstractController
 		if ($form->isSubmitted() && $form->isValid()) {
 			$password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
 			$user->setPassword($password);
-			$user->setToken(bin2hex(mcrypt_create_iv(32, MCRYPT_DEV_URANDOM)));
+			$user->setConfirmationToken(bin2hex(mcrypt_create_iv(32, MCRYPT_DEV_URANDOM)));
 
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($user);
@@ -65,6 +68,15 @@ class SecurityController extends AbstractController
 	}
 
 	/**
+	 * @throws \Exception
+	 * @Route("/logout", name="security_logout")
+	 */
+	public function logout()
+	{
+		throw new \Exception('This should never be reached!');
+	}
+
+	/**
 	 * @param Request $request
 	 * @param string $token
 	 * @Route("/confirm/{token}", methods={"GET"}, name="security_confirm")
@@ -74,13 +86,13 @@ class SecurityController extends AbstractController
 	{
 		$user = $this->getDoctrine()
 			->getRepository(User::class)
-			->findOneBy(['token' => $token]);
+			->findOneBy(['confirmationToken' => $token]);
 
 		if(!$user)
 			throw $this->createNotFoundException('Ce token n\'est pas valide');
 
 		$em = $this->getDoctrine()->getManager();
-		$user->setToken(null);
+		$user->setConfirmationToken(null);
 		$user->setActive(true);
 		$em->flush();
 
@@ -90,11 +102,73 @@ class SecurityController extends AbstractController
 	}
 
 	/**
-	 * @throws \Exception
-	 * @Route("/logout", name="security_logout")
+	 * @param Request $request
+	 * @param EventDispatcherInterface $dispatcher
+	 * @Route("/lost-password", methods={"GET", "POST"}, name="security_lost_password")
+	 * @return Response
 	 */
-	public function logout()
+	public function lostPasswordAction(Request $request, EventDispatcherInterface $dispatcher)
 	{
-		throw new \Exception('This should never be reached!');
+		$userForm = new User();
+		$form = $this->createForm(LostPasswordType::class, $userForm)->handleRequest($request);
+
+		if ($form->isSubmitted() && $form->isValid()) {
+			$user = $this->getDoctrine()
+				->getRepository(User::class)
+				->findOneBy(['email' => $userForm->getEmail()]);
+
+			if ($user) {
+				$user->setResetToken(bin2hex(mcrypt_create_iv(32, MCRYPT_DEV_URANDOM)));
+
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($user);
+				$em->flush();
+
+				$event = new UserResetPasswordEvent($user);
+				$dispatcher->dispatch(UserResetPasswordEvent::NAME, $event);
+			}
+
+			return $this->redirectToRoute('security_reset_password');
+		}
+
+		return $this->render('Security/lost-password.html.twig', array(
+			'form' => $form->createView()
+		));
+	}
+
+	/**
+	 * @param Request $request
+	 * @Route("/reset-password", methods={"GET", "POST"}, name="security_reset_password")
+	 * @return Response
+	 */
+	public function resetPasswordAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+	{
+		$userForm = new User();
+		$form = $this->createForm(ResetPasswordType::class, $userForm)->handleRequest($request);
+
+		if ($form->isSubmitted() && $form->isValid()) {
+			$user = $this->getDoctrine()
+				->getRepository(User::class)
+				->findOneBy(['resetToken' => $userForm->getResetToken()]);
+
+			if(!$user)
+				throw $this->createNotFoundException('Ce token n\'est pas valide');
+
+			$password = $passwordEncoder->encodePassword($user, $userForm->getPlainPassword());
+			$user->setPassword($password);
+			$user->setResetToken(null);
+
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($user);
+			$em->flush();
+
+			$this->addFlash('success', "Votre mot de passe a été changé, vous pouvez vous connecter.");
+
+			return $this->redirectToRoute('security_login');
+		}
+
+		return $this->render('Security/lost-password.html.twig', array(
+			'form' => $form->createView()
+		));
 	}
 }

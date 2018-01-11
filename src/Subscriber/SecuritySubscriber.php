@@ -4,6 +4,7 @@ namespace App\Subscriber;
 
 
 use App\Event\UserCreatedEvent;
+use App\Event\UserResetPasswordEvent;
 use Swift_Mailer;
 use Swift_Message;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -33,6 +34,7 @@ class SecuritySubscriber implements EventSubscriberInterface
 	{
 		return array(
 			UserCreatedEvent::NAME => 'onUserCreated',
+			UserResetPasswordEvent::NAME => 'onUserResetPassword',
 		);
 	}
 
@@ -43,6 +45,19 @@ class SecuritySubscriber implements EventSubscriberInterface
 			->setTo($event->getUser()->getEmail())
 			->setBody(
 				$this->twig->render('Email/registration.html.twig', ['user' => $event->getUser()]),
+				'text/html'
+			);
+
+		$this->mailer->send($message);
+	}
+
+	public function onUserResetPassword(UserResetPasswordEvent $event)
+	{
+		$message = (new Swift_Message('Réinitialisation du mot de passe'))
+			->setFrom('noreply@snowtricks.com')
+			->setTo($event->getUser()->getEmail())
+			->setBody(
+				$this->twig->render('Email/lost-password.html.twig', ['user' => $event->getUser()]),
 				'text/html'
 			);
 

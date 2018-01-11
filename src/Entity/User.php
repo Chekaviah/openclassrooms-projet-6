@@ -58,7 +58,13 @@ class User implements AdvancedUserInterface, \Serializable
 	 * @var string
 	 * @ORM\Column(type="string", length=64, nullable=true)
 	 */
-	private $token;
+	private $confirmationToken = null;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", length=64, nullable=true)
+	 */
+	private $resetToken = null;
 
 	/**
 	 * @var Avatar
@@ -183,17 +189,33 @@ class User implements AdvancedUserInterface, \Serializable
 	/**
 	 * @return string
 	 */
-	public function getToken(): ?string
+	public function getConfirmationToken(): ?string
 	{
-		return $this->token;
+		return $this->confirmationToken;
 	}
 
 	/**
 	 * @param string $token
 	 */
-	public function setToken($token)
+	public function setConfirmationToken($token)
 	{
-		$this->token = $token;
+		$this->confirmationToken = $token;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getResetToken(): ?string
+	{
+		return $this->resetToken;
+	}
+
+	/**
+	 * @param string $token
+	 */
+	public function setResetToken($token)
+	{
+		$this->resetToken = $token;
 	}
 
 	/**
