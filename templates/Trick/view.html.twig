@@ -78,6 +78,10 @@
                 <div class="trick-informations">
                     <ul class="list-unstyled m-0 d-flex justify-content-center">
                         <li class="mx-2">
+                            Ajouté le : {{ trick.created|localizeddate('long', 'short', 'fr_FR', null, 'd MMMM Y') }}
+                        </li>
+                        <li class="mx-2">Dernière édition : {{ trick.updated|localizeddate('long', 'short', 'fr_FR', null, 'd MMMM Y \'à\' H\'h\'mm') }}</li>
+                        <li class="mx-2">
                             {% if not trick.categories.empty %}
                                 Catégories :
                                 {% for category in trick.categories %}
