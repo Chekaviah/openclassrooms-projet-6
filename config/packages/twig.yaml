@@ -4,3 +4,11 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes:
         - 'bootstrap_4_layout.html.twig'
+    date:
+        format: d F Y, H\hi
+        interval_format: '%%d jours'
+        timezone: Europe/Paris
+    number_format:
+        decimals: 2
+        decimal_point: ','
+        thousands_separator: ' '

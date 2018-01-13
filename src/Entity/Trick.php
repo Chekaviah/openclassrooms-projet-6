@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,6 +13,7 @@ use Doctrine\ORM\Mapping\JoinTable;
 /**
  * @ORM\Table(name="trick")
  * @ORM\Entity(repositoryClass="App\Repository\TrickRepository")
+ * @ORM\EntityListeners({"App\EventListener\TrickListener"})
  */
 class Trick
 {
@@ -40,6 +42,18 @@ class Trick
 	 * @ORM\Column(type="text", nullable=true)
 	 */
 	private $description;
+
+	/**
+	 * @var DateTime
+	 * @ORM\Column(type="datetime")
+	 */
+	private $created;
+
+	/**
+	 * @var DateTime
+	 * @ORM\Column(type="datetime")
+	 */
+	private $updated;
 
 	/**
 	 * @var Category[]|ArrayCollection
@@ -127,6 +141,38 @@ class Trick
 	public function setDescription(string $description)
 	{
 		$this->description = $description;
+	}
+
+	/**
+	 * @return DateTime
+	 */
+	public function getCreated(): ?DateTime
+	{
+		return $this->created;
+	}
+
+	/**
+	 * @param DateTime $created
+	 */
+	public function setCreated(DateTime $created)
+	{
+		$this->created = $created;
+	}
+
+	/**
+	 * @return DateTime
+	 */
+	public function getUpdated(): ?DateTime
+	{
+		return $this->updated;
+	}
+
+	/**
+	 * @param DateTime $updated
+	 */
+	public function setUpdated(DateTime $updated)
+	{
+		$this->updated = $updated;
 	}
 
 	/**
