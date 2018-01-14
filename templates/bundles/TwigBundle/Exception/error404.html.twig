@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('/css/error.css') }}">
+{% endblock %}
+
+{% block body %}
+    <section id="cover" class="cover">
+        <div class="cover-inner">
+            <div class="cover-catch cover-error">
+                <b>Erreur 404</b><br>
+                La page demandée n'existe pas. Vérifiez l'URL ou retournez à <a href="{{ path('trick_list') }}">la page d'accueil</a>.
+            </div>
+        </div>
+    </section>
+{% endblock %}

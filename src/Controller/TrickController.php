@@ -39,6 +39,9 @@ class TrickController extends AbstractController
 			->getRepository(Trick::class)
 			->findOneBySlugWithData($slug);
 
+		if(!$trick)
+			throw $this->createNotFoundException();
+
 		$comment = new Comment();
 		$form = $this->createForm(CommentType::class, $comment);
 
@@ -82,6 +85,9 @@ class TrickController extends AbstractController
 			->getRepository(Trick::class)
 			->findOneByIdWithData($id);
 
+		if(!$trick)
+			throw $this->createNotFoundException();
+
 		$form = $this->createForm(TrickType::class, $trick)->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
@@ -110,9 +116,11 @@ class TrickController extends AbstractController
 			->getRepository(Trick::class)
 			->find($id);
 
-		if (!$this->isCsrfTokenValid('delete', $request->request->get('token'))) {
+		if(!$trick)
+			throw $this->createNotFoundException();
+
+		if (!$this->isCsrfTokenValid('delete', $request->request->get('token')))
 			return $this->redirectToRoute('trick_view', array('slug' => $trick->getSlug()));
-		}
 
 		$em = $this->getDoctrine()->getManager();
 		$em->remove($trick);
