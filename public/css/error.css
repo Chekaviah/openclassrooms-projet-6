@@ -1,0 +1,47 @@
+.cover {
+	position: relative;
+	display: table;
+	height: calc(100% - 113px);
+	min-height: calc(100% - 113px);
+	width: 100%;
+	background-color: #FFF;
+}
+
+.cover-inner {
+	position: relative;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	z-index: 2;
+	padding: 0 2rem;
+}
+
+.cover-catch {
+	display: inline-block;
+	text-align: center;
+	font-size: 2rem;
+	color: #71cde2;
+	padding: 50px 0;
+}
+
+.cover-catch b {
+	margin-bottom: 20px;
+	font-size: 4rem;
+	font-weight: 900;
+	color: #61bdd6;
+}
+
+.cover-catch a {
+	color: #71cde2;
+	text-decoration: underline;
+}
+
+@media screen and (max-width: 576px) {
+	.cover-catch {
+		font-size: 1.2rem;
+	}
+	
+	.cover-catch b {
+		font-size: 2rem;
+	}
+}

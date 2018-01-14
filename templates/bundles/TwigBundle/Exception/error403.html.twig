@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('/css/error.css') }}">
+{% endblock %}
+
+{% block body %}
+    <section id="cover" class="cover">
+        <div class="cover-inner">
+            <div class="cover-catch cover-error">
+                <b>Erreur 403</b><br>
+                Vous n'avez pas accès à cette page. Si vous pensez qu'il s'agit d'une erreur veuillez contacter un administrateur.
+            </div>
+        </div>
+    </section>
+{% endblock %}
