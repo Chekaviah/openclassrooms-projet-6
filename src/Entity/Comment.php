@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\User;
 use App\Entity\Trick;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -51,7 +52,7 @@ class Comment
 	/**
 	 * @return int
 	 */
-	public function getId()
+	public function getId(): ?int
 	{
 		return $this->id;
 	}
@@ -59,7 +60,7 @@ class Comment
 	/**
 	 * @return \DateTime
 	 */
-	public function getDate()
+	public function getDate(): DateTime
 	{
 		return $this->date;
 	}

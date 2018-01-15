@@ -85,12 +85,13 @@ class Trick
 		$this->images = new ArrayCollection();
 		$this->videos = new ArrayCollection();
 		$this->categories = new ArrayCollection();
+		$this->comments = new ArrayCollection();
 	}
 
 	/**
 	 * @return int
 	 */
-	public function getId(): int
+	public function getId(): ?int
 	{
 		return $this->id;
 	}
@@ -263,7 +264,7 @@ class Trick
 	 */
 	public function removeComment(Comment $comment)
 	{
-		$this->videos->removeElement($comment);
+		$this->comments->removeElement($comment);
 	}
 
 	/**
