@@ -6,6 +6,8 @@ use App\Entity\Comment;
 use App\Entity\Trick;
 use App\Form\Type\CommentType;
 use App\Form\Type\TrickType;
+use App\Handler\TrickCreateHandler;
+use App\Handler\TrickEditHandler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,7 +35,7 @@ class TrickController extends AbstractController
      * @Route("/trick/view/{slug}", methods="GET", name="trick_view")
      * @return Response
      */
-    public function viewAction( $slug): Response
+    public function viewAction(string $slug): Response
     {
         $trick = $this->getDoctrine()
             ->getRepository(Trick::class)
@@ -56,17 +58,13 @@ class TrickController extends AbstractController
      * @Route("/trick/create", methods={"GET","POST"}, name="trick_create")
      * @return Response
      */
-    public function createAction(Request $request): Response
+    public function createAction(Request $request, TrickCreateHandler $trickCreateHandler): Response
     {
         $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick)->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($trick);
-            $em->flush();
+        if ($trickCreateHandler->handle($form, $trick))
             return $this->redirectToRoute('trick_view', array('slug' => $trick->getSlug()));
-        }
 
         return $this->render('trick/create.html.twig', array(
             'form' => $form->createView()
@@ -79,7 +77,7 @@ class TrickController extends AbstractController
      * @Route("/trick/edit/{id}", methods={"GET","POST"}, requirements={"id": "\d+"}, name="trick_edit")
      * @return Response
      */
-    public function editAction(Request $request, $id): Response
+    public function editAction(Request $request, TrickEditHandler $trickEditHandler, int $id): Response
     {
         $trick = $this->getDoctrine()
             ->getRepository(Trick::class)
@@ -90,14 +88,8 @@ class TrickController extends AbstractController
 
         $form = $this->createForm(TrickType::class, $trick)->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $trick->setUpdated(new \DateTime());
-
-            $em->persist($trick);
-            $em->flush();
+        if ($trickEditHandler->handle($form, $trick))
             return $this->redirectToRoute('trick_view', array('slug' => $trick->getSlug()));
-        }
 
         return $this->render('trick/edit.html.twig', array(
             'trick' => $trick,

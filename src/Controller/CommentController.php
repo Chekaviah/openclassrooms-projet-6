@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Trick;
 use App\Form\Type\CommentType;
+use App\Handler\CommentHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +20,7 @@ class CommentController extends AbstractController
      * @Route("/trick/{slug}/comment", methods={"POST"}, name="comment_add")
      * @return Response
      */
-    public function commentAction(Request $request, $slug): Response
+    public function commentAction(Request $request, CommentHandler $commentHandler, string $slug): Response
     {
         $trick = $this->getDoctrine()
             ->getRepository(Trick::class)
@@ -28,16 +29,9 @@ class CommentController extends AbstractController
         $user = $this->getUser();
 
         $comment = new Comment();
-        $comment->setTrick($trick);
-        $comment->setUser($user);
 
         $form = $this->createForm(CommentType::class, $comment)->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($comment);
-            $em->flush();
-        }
+        $commentHandler->handle($form, $comment, $user, $trick);
 
         return $this->redirectToRoute('trick_view', array('slug' => $trick->getSlug()));
     }
