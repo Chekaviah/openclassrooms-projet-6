@@ -25,7 +25,7 @@ class TrickController extends AbstractController
             ->getRepository(Trick::class)
             ->findAllWithData();
 
-        return $this->render('trick/list.html.twig', array(
+        return $this->render('Trick/list.html.twig', array(
             'tricks' => $tricks
         ));
     }
@@ -47,7 +47,7 @@ class TrickController extends AbstractController
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
 
-        return $this->render('trick/view.html.twig', array(
+        return $this->render('Trick/view.html.twig', array(
             'trick' => $trick,
             'form' => $form->createView()
         ));
@@ -66,7 +66,7 @@ class TrickController extends AbstractController
         if ($trickCreateHandler->handle($form, $trick))
             return $this->redirectToRoute('trick_view', array('slug' => $trick->getSlug()));
 
-        return $this->render('trick/create.html.twig', array(
+        return $this->render('Trick/create.html.twig', array(
             'form' => $form->createView()
         ));
     }
@@ -91,7 +91,7 @@ class TrickController extends AbstractController
         if ($trickEditHandler->handle($form, $trick))
             return $this->redirectToRoute('trick_view', array('slug' => $trick->getSlug()));
 
-        return $this->render('trick/edit.html.twig', array(
+        return $this->render('Trick/edit.html.twig', array(
             'trick' => $trick,
             'form' => $form->createView()
         ));
