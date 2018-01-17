@@ -12,7 +12,7 @@
 
 {% block modals %}
     {{ parent() }}
-    {{ include('form/_delete_trick_confirmation.html.twig') }}
+    {{ include('Form/_delete_trick_confirmation.html.twig') }}
 {% endblock %}
 
 {% block body %}
@@ -32,7 +32,7 @@
                             </a>
                         </div>
                         <div class="action-delete text-center">
-                            {{ include('form/_delete_trick_form.html.twig', {trick: trick}) }}
+                            {{ include('Form/_delete_trick_form.html.twig', {trick: trick}) }}
                         </div>
                     </div>
                 {% endif %}
@@ -96,7 +96,7 @@
                     <div class="trick-comment-form py-4 mx-4 mt-4">
                         <div class="row justify-content-center">
                             <div class="col-xl-7">
-                                {{ include('form/_add_comment_form.html.twig') }}
+                                {{ include('Form/_add_comment_form.html.twig') }}
                             </div>
                         </div>
                     </div>
