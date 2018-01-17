@@ -1,0 +1,7 @@
+doctrine:
+    dbal:
+        driver: pdo_sqlite
+        dbname: 'projet6_test'
+        path:  "%kernel.project_dir%/var/data.db"
+        memory: true
+        url:  "sqlite:///%kernel.project_dir%/var/data.db"

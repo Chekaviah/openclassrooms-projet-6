@@ -49,7 +49,7 @@ class CategoryTypeTest extends TypeTestCase
 				'data' => array()
 			),
 			array(
-				'date' => array(
+				'data' => array(
 					'name' => null,
 					'slug' => null
 				)

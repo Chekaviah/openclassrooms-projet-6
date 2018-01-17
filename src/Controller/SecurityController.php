@@ -9,17 +9,20 @@ use App\Event\UserResetPasswordEvent;
 use App\Form\Type\LostPasswordType;
 use App\Form\Type\ResetPasswordType;
 use App\Form\Type\UserType;
+use App\Handler\LostPasswordHandler;
+use App\Handler\RegisterHandler;
+use App\Handler\ResetPasswordHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
 	/**
+     * @param AuthenticationUtils $authUtilss
 	 * @Route("/login", methods={"GET", "POST"}, name="security_login")
 	 * @return Response
 	 */
@@ -37,30 +40,22 @@ class SecurityController extends AbstractController
 
 	/**
 	 * @param Request $request
-	 * @param UserPasswordEncoderInterface $passwordEncoder
+	 * @param RegisterHandler $registerHandler
 	 * @param EventDispatcherInterface $dispatcher
 	 * @Route("/register", methods={"GET", "POST"}, name="security_register")
 	 * @return Response
 	 */
-	public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, EventDispatcherInterface $dispatcher): Response
+	public function registerAction(Request $request, RegisterHandler $registerHandler, EventDispatcherInterface $dispatcher): Response
 	{
 		$user = new User();
 		$form = $this->createForm(UserType::class, $user)->handleRequest($request);
 
-		if ($form->isSubmitted() && $form->isValid()) {
-			$password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
-			$user->setPassword($password);
-			$user->setConfirmationToken(bin2hex(mcrypt_create_iv(32, MCRYPT_DEV_URANDOM)));
+        if ($registerHandler->handle($form, $user)) {
+            $event = new UserCreatedEvent($user);
+            $dispatcher->dispatch(UserCreatedEvent::NAME, $event);
 
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($user);
-			$em->flush();
-
-			$event = new UserCreatedEvent($user);
-			$dispatcher->dispatch(UserCreatedEvent::NAME, $event);
-
-			return $this->redirectToRoute('security_login');
-		}
+            return $this->redirectToRoute('security_login');
+        }
 
 		return $this->render('Security/register.html.twig', array(
 			'form' => $form->createView()
@@ -77,7 +72,6 @@ class SecurityController extends AbstractController
 	}
 
 	/**
-	 * @param Request $request
 	 * @param string $token
 	 * @Route("/confirm/{token}", methods={"GET"}, name="security_confirm")
 	 * @return Response
@@ -102,31 +96,20 @@ class SecurityController extends AbstractController
 	}
 
 	/**
-	 * @param Request $request
+	 * @param Request
+     * @param LostPasswordHandler $lostPasswordHandler
 	 * @param EventDispatcherInterface $dispatcher
 	 * @Route("/lost-password", methods={"GET", "POST"}, name="security_lost_password")
 	 * @return Response
 	 */
-	public function lostPasswordAction(Request $request, EventDispatcherInterface $dispatcher)
+	public function lostPasswordAction(Request $request, LostPasswordHandler $lostPasswordHandler, EventDispatcherInterface $dispatcher)
 	{
-		$userForm = new User();
-		$form = $this->createForm(LostPasswordType::class, $userForm)->handleRequest($request);
+		$user = new User();
+		$form = $this->createForm(LostPasswordType::class, $user)->handleRequest($request);
 
-		if ($form->isSubmitted() && $form->isValid()) {
-			$user = $this->getDoctrine()
-				->getRepository(User::class)
-				->findOneBy(['email' => $userForm->getEmail()]);
-
-			if ($user) {
-				$user->setResetToken(bin2hex(mcrypt_create_iv(32, MCRYPT_DEV_URANDOM)));
-
-				$em = $this->getDoctrine()->getManager();
-				$em->persist($user);
-				$em->flush();
-
-				$event = new UserResetPasswordEvent($user);
-				$dispatcher->dispatch(UserResetPasswordEvent::NAME, $event);
-			}
+        if ($lostPasswordHandler->handle($form, $user)) {
+            $event = new UserResetPasswordEvent($user);
+            $dispatcher->dispatch(UserResetPasswordEvent::NAME, $event);
 
 			return $this->redirectToRoute('security_reset_password');
 		}
@@ -138,34 +121,19 @@ class SecurityController extends AbstractController
 
 	/**
 	 * @param Request $request
+     * @param ResetPasswordHandler $resetPasswordHandler
 	 * @Route("/reset-password", methods={"GET", "POST"}, name="security_reset_password")
 	 * @return Response
 	 */
-	public function resetPasswordAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+	public function resetPasswordAction(Request $request, ResetPasswordHandler $resetPasswordHandler)
 	{
-		$userForm = new User();
-		$form = $this->createForm(ResetPasswordType::class, $userForm)->handleRequest($request);
+		$user = new User();
+		$form = $this->createForm(ResetPasswordType::class, $user)->handleRequest($request);
 
-		if ($form->isSubmitted() && $form->isValid()) {
-			$user = $this->getDoctrine()
-				->getRepository(User::class)
-				->findOneBy(['resetToken' => $userForm->getResetToken()]);
-
-			if(!$user)
-				throw $this->createNotFoundException('Ce token n\'est pas valide');
-
-			$password = $passwordEncoder->encodePassword($user, $userForm->getPlainPassword());
-			$user->setPassword($password);
-			$user->setResetToken(null);
-
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($user);
-			$em->flush();
-
-			$this->addFlash('success', "Votre mot de passe a été changé, vous pouvez vous connecter.");
-
-			return $this->redirectToRoute('security_login');
-		}
+        if ($resetPasswordHandler->handle($form, $user)) {
+            $this->addFlash('success', "Votre mot de passe a été changé, vous pouvez vous connecter.");
+            return $this->redirectToRoute('security_login');
+        }
 
 		return $this->render('Security/lost-password.html.twig', array(
 			'form' => $form->createView()

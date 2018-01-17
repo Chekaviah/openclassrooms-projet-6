@@ -13,7 +13,6 @@ use Doctrine\ORM\Mapping\JoinTable;
 /**
  * @ORM\Table(name="trick")
  * @ORM\Entity(repositoryClass="App\Repository\TrickRepository")
- * @ORM\EntityListeners({"App\EventListener\TrickListener"})
  */
 class Trick
 {
@@ -27,13 +26,13 @@ class Trick
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="string", length=255, unique=true)
+	 * @ORM\Column(type="string", length=100, unique=true)
 	 */
 	private $name;
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="string", length=255, unique=true)
+	 * @ORM\Column(type="string", length=100, unique=true)
 	 */
 	private $slug;
 
@@ -85,12 +84,15 @@ class Trick
 		$this->images = new ArrayCollection();
 		$this->videos = new ArrayCollection();
 		$this->categories = new ArrayCollection();
+		$this->comments = new ArrayCollection();
+		$this->created = new DateTime();
+		$this->updated = new DateTime();
 	}
 
 	/**
 	 * @return int
 	 */
-	public function getId(): int
+	public function getId(): ?int
 	{
 		return $this->id;
 	}
@@ -263,7 +265,7 @@ class Trick
 	 */
 	public function removeComment(Comment $comment)
 	{
-		$this->videos->removeElement($comment);
+		$this->comments->removeElement($comment);
 	}
 
 	/**

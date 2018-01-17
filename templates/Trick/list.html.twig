@@ -12,7 +12,7 @@
 
 {% block modals %}
     {{ parent() }}
-    {{ include('form/_delete_trick_confirmation.html.twig') }}
+    {{ include('Form/_delete_trick_confirmation.html.twig') }}
 {% endblock %}
 
 {% block body %}
@@ -60,7 +60,7 @@
                                                 </a>
                                             </li>
                                             <li class="action delete">
-                                                {{ include('form/_delete_trick_form.html.twig', {trick: trick}) }}
+                                                {{ include('Form/_delete_trick_form.html.twig', {trick: trick}) }}
                                             </li>
                                         {% endif %}
                                     </ul>
