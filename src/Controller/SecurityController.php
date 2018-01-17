@@ -163,7 +163,6 @@ class SecurityController extends AbstractController
 			$em->flush();
 
 			$this->addFlash('success', "Votre mot de passe a été changé, vous pouvez vous connecter.");
-
 			return $this->redirectToRoute('security_login');
 		}
 
