@@ -54,6 +54,7 @@ class SecurityController extends AbstractController
             $event = new UserCreatedEvent($user);
             $dispatcher->dispatch(UserCreatedEvent::NAME, $event);
 
+            $this->addFlash('success', "Nous vous avons envoyé un email de confirmation. Vous devez valider votre compte pour vous connecter.");
             return $this->redirectToRoute('security_login');
         }
 
@@ -104,13 +105,15 @@ class SecurityController extends AbstractController
 	 */
 	public function lostPasswordAction(Request $request, LostPasswordHandler $lostPasswordHandler, EventDispatcherInterface $dispatcher)
 	{
-		$user = new User();
-		$form = $this->createForm(LostPasswordType::class, $user)->handleRequest($request);
+		$userForm = new User();
+		$form = $this->createForm(LostPasswordType::class, $userForm)->handleRequest($request);
 
-        if ($lostPasswordHandler->handle($form, $user)) {
+        $user = $lostPasswordHandler->handle($form, $userForm);
+        if ($user instanceof User) {
             $event = new UserResetPasswordEvent($user);
             $dispatcher->dispatch(UserResetPasswordEvent::NAME, $event);
 
+            $this->addFlash('success', "Un token de réinitialisation vous a été envoyé par mail");
 			return $this->redirectToRoute('security_reset_password');
 		}
 

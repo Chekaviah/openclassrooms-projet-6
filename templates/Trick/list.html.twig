@@ -69,10 +69,13 @@
                         </div>
                     {% endfor %}
                 </div>
+                <div class="text-center">
+                </div>
 
                 {% if tricks|length > 12 %}
                     <div class="text-center">
-                        <button class="btn btn-info" onclick="this.remove(); $('.hidden-trick').show(); $('.trick-goto a').show();">Voir plus</button>
+                        <button class="btn btn-info mr-3" onclick="this.remove(); $('.hidden-trick').show(); $('.trick-goto a').show();">Voir plus</button>
+                        <a href="{{ path('trick_create') }}" class="btn btn-dark">Ajouter un trick</a>
                     </div>
                     <div class="trick-goto text-right">
                         <a href="#top">

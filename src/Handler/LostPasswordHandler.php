@@ -36,7 +36,7 @@ class LostPasswordHandler
      * @param User $user
      * @return bool
      */
-    public function handle(FormInterface $form, User $userForm): bool
+    public function handle(FormInterface $form, User $userForm)
     {
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -50,7 +50,7 @@ class LostPasswordHandler
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();
 
-                return true;
+                return $user;
             }
         }
 
