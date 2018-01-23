@@ -6,9 +6,11 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Event\UserCreatedEvent;
 use App\Event\UserResetPasswordEvent;
+use App\Form\Type\ChangePasswordType;
 use App\Form\Type\LostPasswordType;
 use App\Form\Type\ResetPasswordType;
 use App\Form\Type\UserType;
+use App\Handler\ChangePasswordHandler;
 use App\Handler\LostPasswordHandler;
 use App\Handler\RegisterHandler;
 use App\Handler\ResetPasswordHandler;
@@ -142,4 +144,25 @@ class SecurityController extends AbstractController
 			'form' => $form->createView()
 		));
 	}
+
+    /**
+     * @param Request $request
+     * @param ChangePasswordHandler $changePasswordHandler
+     * @Route("/change-password", methods={"GET", "POST"}, name="security_change_password")
+     * @return Response
+     */
+	public function changePasswordAction(Request $request, ChangePasswordHandler $changePasswordHandler)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(ChangePasswordType::class, $user)->handleRequest($request);
+
+        if ($changePasswordHandler->handle($form, $user)) {
+            $this->addFlash('success', "Votre mot de passe a bien été changé.");
+            return $this->redirectToRoute('trick_list');
+        }
+
+        return $this->render('Security/change-password.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
 }
