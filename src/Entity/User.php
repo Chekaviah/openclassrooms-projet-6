@@ -30,6 +30,11 @@ class User implements AdvancedUserInterface, \Serializable
 	 */
 	private $plainPassword;
 
+    /**
+     * @var string
+     */
+    private $oldPassword;
+
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", length=64)
@@ -116,6 +121,22 @@ class User implements AdvancedUserInterface, \Serializable
 	{
 		$this->plainPassword = $plainPassword;
 	}
+
+    /**
+     * @return string
+     */
+    public function getOldPassword(): ?string
+    {
+        return $this->oldPassword;
+    }
+
+    /**
+     * @param string $oldPassword
+     */
+    public function setOldPassword($oldPassword)
+    {
+        $this->oldPassword = $oldPassword;
+    }
 
 	/**
 	 * @return string
