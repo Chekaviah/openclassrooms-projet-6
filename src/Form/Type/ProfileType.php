@@ -18,7 +18,9 @@ class ProfileType extends AbstractType
 				'label' => 'Nom d\'utilisateur'
 			))
 			->add('email', 		EmailType::class)
-			->add('avatar', 	AvatarType::class)
+			->add('avatar', 	AvatarType::class, array(
+                'required' => false
+            ))
 		;
 	}
 

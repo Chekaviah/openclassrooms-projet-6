@@ -23,8 +23,10 @@ class UserController extends AbstractController
 
         $form = $this->createForm(ProfileType::class, $user)->handleRequest($request);
 
-        if($profileHandler->handle($form, $user))
+        if($profileHandler->handle($form, $user)) {
+            $this->addFlash('success', "Votre profil a bien été mis à jour.");
             return $this->redirectToRoute('user_profile');
+        }
 
         return $this->render('User/profile.html.twig', array(
             'form' => $form->createView()
