@@ -37,3 +37,4 @@ security:
         - { path: ^/trick/delete,     roles: ROLE_USER }
         - { path: ^/category/create,  roles: ROLE_USER }
         - { path: ^/category/delete,  roles: ROLE_USER }
+        - { path: ^/change-password,  roles: ROLE_USER }
