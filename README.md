@@ -1,10 +1,10 @@
-# Snowtricks
+# Snowtricks 
 
 Snowtricks is a symfony 4 project for the Openclassrooms "Application developer" path. This project is intended to become a community website, fully user-driven. Snowtricks is a powerfull tool to discover and learn freestyle snowboarding.   
 
 **TravisCI**
 
-[![Build Status](https://travis-ci.org/Chekaviah/openclassrooms-projet-6.svg?branch=master)](https://travis-ci.org/Chekaviah/openclassrooms-projet-6)
+[![Build Status](https://travis-ci.org/Chekaviah/snowtricks.svg?branch=master)](https://travis-ci.org/Chekaviah/snowtricks)
 
 **SensioLabsInsight**
 
