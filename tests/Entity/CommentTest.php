@@ -2,12 +2,16 @@
 
 namespace App\Tests\Entity;
 
-
-use App\Entity\Comment;
-use App\Entity\Trick;
 use App\Entity\User;
+use App\Entity\Trick;
+use App\Entity\Comment;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class CommentTest
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class CommentTest extends TestCase
 {
 	public function testAttributes()

@@ -4,9 +4,14 @@ namespace App\EventListener;
 
 use App\Entity\Avatar;
 use App\Service\Uploader;
-use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 
+/**
+ * Class AvatarUploadListener
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class AvatarUploadListener
 {
 	/**
@@ -21,6 +26,7 @@ class AvatarUploadListener
 
 	/**
 	 * AvatarUploadListener constructor.
+     *
 	 * @param Uploader $uploader
 	 * @param $directory
 	 */
@@ -32,7 +38,7 @@ class AvatarUploadListener
 
 	/**
 	 * @param Avatar $avatar
-	 * @param LifecycleEventArgs $event
+     *
 	 * @ORM\PrePersist
 	 * @ORM\PreUpdate
 	 */
@@ -52,7 +58,7 @@ class AvatarUploadListener
 
 	/**
 	 * @param Avatar $avatar
-	 * @param LifecycleEventArgs $event
+     *
 	 * @ORM\PostPersist()
 	 * @ORM\PostUpdate()
 	 */
@@ -73,7 +79,7 @@ class AvatarUploadListener
 
 	/**
 	 * @param Avatar $avatar
-	 * @param LifecycleEventArgs $event
+     *
 	 * @ORM\PreRemove()
 	 */
 	public function preRemoveHandler(Avatar $avatar)
@@ -86,7 +92,7 @@ class AvatarUploadListener
 
 	/**
 	 * @param Avatar $avatar
-	 * @param LifecycleEventArgs $event
+     *
 	 * @ORM\PostRemove()
 	 */
 	public function postRemoveHandler(Avatar $avatar)

@@ -2,12 +2,16 @@
 
 namespace App\Tests\Entity;
 
-
 use App\Entity\Image;
 use App\Entity\Trick;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * Class ImageTest
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class ImageTest extends TestCase
 {
 	public function testAttributes()

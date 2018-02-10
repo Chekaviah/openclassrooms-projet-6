@@ -2,18 +2,23 @@
 
 namespace App\Entity;
 
+use DateTime;
 use App\Entity\User;
 use App\Entity\Trick;
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Class Comment
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ *
  * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
  */
 class Comment
 {
 	/**
 	 * @var int
+     *
 	 * @ORM\Id
 	 * @ORM\GeneratedValue
 	 * @ORM\Column(type="integer")
@@ -21,29 +26,38 @@ class Comment
 	private $id;
 
 	/**
-	 * @var
+	 * @var \DateTime
+     *
 	 * @ORM\Column(name="date", type="datetime")
 	 */
 	private $date;
 
 	/**
 	 * @var string
+     *
 	 * @ORM\Column(name="content", type="text")
 	 */
 	private $content;
 
 	/**
+     * @var User
+     *
 	 * @ORM\ManyToOne(targetEntity="App\Entity\User", fetch="EAGER")
 	 * @ORM\JoinColumn(nullable=false)
 	 */
 	private $user;
 
 	/**
+     * @var Trick
+     *
 	 * @ORM\ManyToOne(targetEntity="App\Entity\Trick", inversedBy="comments")
 	 * @ORM\JoinColumn(nullable=false)
 	 */
 	private $trick;
 
+    /**
+     * Comment constructor.
+     */
 	public function __construct()
 	{
 		$this->date = new \DateTime();

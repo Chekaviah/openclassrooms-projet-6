@@ -2,12 +2,16 @@
 
 namespace App\Handler;
 
-
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/**
+ * Class ChangePasswordHandler
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class ChangePasswordHandler
 {
     /**
@@ -22,6 +26,7 @@ class ChangePasswordHandler
 
     /**
      * ResetPasswordHandler constructor.
+     *
      * @param EntityManagerInterface $entityManager
      * @param UserPasswordEncoderInterface $passwordEncoder
      */
@@ -34,6 +39,7 @@ class ChangePasswordHandler
     /**
      * @param FormInterface $form
      * @param User $user
+     *
      * @return bool
      */
     public function handle(FormInterface $form, User $user): bool

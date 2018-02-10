@@ -2,11 +2,15 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
+ * Class Category
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ *
  * @ORM\Table(name="category")
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  */
@@ -14,6 +18,7 @@ class Category
 {
     /**
 	 * @var int
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -22,6 +27,7 @@ class Category
 
 	/**
 	 * @var string
+     *
 	 * @ORM\Column(name="name", type="string", length=100, unique=true)
 	 *
 	 */
@@ -29,16 +35,21 @@ class Category
 
 	/**
 	 * @var string
+     *
 	 * @ORM\Column(name="slug", type="string", length=100, unique=true)
 	 */
 	private $slug;
 
 	/**
 	 * @var Trick[]|ArrayCollection
+     *
 	 * @ORM\ManyToMany(targetEntity="App\Entity\Trick", mappedBy="categories")
 	 */
 	private $tricks;
 
+    /**
+     * Category constructor.
+     */
 	public function __construct()
 	{
 		$this->tricks = new ArrayCollection();

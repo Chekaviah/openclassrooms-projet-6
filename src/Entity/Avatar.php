@@ -6,6 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
+ * Class AvatarClientPostAction
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ *
  * @ORM\Table(name="avatar")
  * @ORM\Entity(repositoryClass="App\Repository\AvatarRepository")
  * @ORM\EntityListeners({"App\EventListener\AvatarUploadListener"})
@@ -14,6 +18,7 @@ class Avatar
 {
     /**
 	 * @var int
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -22,12 +27,14 @@ class Avatar
 
 	/**
 	 * @var string
+     *
 	 * @ORM\Column(name="name", type="string", length=255)
 	 */
 	private $name;
 
 	/**
 	 * @var string
+     *
 	 * @ORM\Column(name="extension", type="string", length=255)
 	 */
 	private $extension;

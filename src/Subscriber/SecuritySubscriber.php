@@ -2,14 +2,18 @@
 
 namespace App\Subscriber;
 
-
-use App\Event\UserCreatedEvent;
-use App\Event\UserResetPasswordEvent;
 use Swift_Mailer;
 use Swift_Message;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Twig\Environment;
+use App\Event\UserCreatedEvent;
+use App\Event\UserResetPasswordEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
+/**
+ * Class SecuritySubscriber
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class SecuritySubscriber implements EventSubscriberInterface
 {
 	/**
@@ -22,6 +26,12 @@ class SecuritySubscriber implements EventSubscriberInterface
 	 */
 	private $mailer;
 
+    /**
+     * SecuritySubscriber constructor.
+     *
+     * @param Environment  $twig
+     * @param Swift_Mailer $mailer
+     */
 	public function __construct(
 		Environment $twig,
 		Swift_Mailer $mailer
@@ -30,6 +40,9 @@ class SecuritySubscriber implements EventSubscriberInterface
 		$this->mailer = $mailer;
 	}
 
+    /**
+     * @return array
+     */
 	public static function getSubscribedEvents()
 	{
 		return array(
@@ -38,6 +51,9 @@ class SecuritySubscriber implements EventSubscriberInterface
 		);
 	}
 
+    /**
+     * @param UserCreatedEvent $event
+     */
 	public function onUserCreated(UserCreatedEvent $event)
 	{
 		$message = (new Swift_Message('Votre compte a bien été créé !'))
@@ -51,6 +67,9 @@ class SecuritySubscriber implements EventSubscriberInterface
 		$this->mailer->send($message);
 	}
 
+    /**
+     * @param UserResetPasswordEvent $event
+     */
 	public function onUserResetPassword(UserResetPasswordEvent $event)
 	{
 		$message = (new Swift_Message('Réinitialisation du mot de passe'))

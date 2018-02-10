@@ -4,9 +4,14 @@ namespace App\EventListener;
 
 use App\Entity\Image;
 use App\Service\Uploader;
-use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 
+/**
+ * Class ImageUploadListener
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class ImageUploadListener
 {
 	/**
@@ -21,6 +26,7 @@ class ImageUploadListener
 
 	/**
 	 * ImageUploadListener constructor.
+     *
 	 * @param Uploader $uploader
 	 * @param $directory
 	 */
@@ -32,7 +38,7 @@ class ImageUploadListener
 
 	/**
 	 * @param Image $image
-	 * @param LifecycleEventArgs $event
+	 *
 	 * @ORM\PrePersist
 	 * @ORM\PreUpdate
 	 */
@@ -46,7 +52,7 @@ class ImageUploadListener
 
 	/**
 	 * @param Image $image
-	 * @param LifecycleEventArgs $event
+	 *
 	 * @ORM\PostPersist()
 	 * @ORM\PostUpdate()
 	 */
@@ -64,7 +70,7 @@ class ImageUploadListener
 
 	/**
 	 * @param Image $image
-	 * @param LifecycleEventArgs $event
+	 *
 	 * @ORM\PreRemove()
 	 */
 	public function preRemoveHandler(Image $image)
@@ -74,7 +80,7 @@ class ImageUploadListener
 
 	/**
 	 * @param Image $image
-	 * @param LifecycleEventArgs $event
+	 *
 	 * @ORM\PostRemove()
 	 */
 	public function postRemoveHandler(Image $image)

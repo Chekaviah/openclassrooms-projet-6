@@ -2,17 +2,24 @@
 
 namespace App\DataFixtures;
 
-
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
+/**
+ * Class UserFixtures
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class UserFixtures extends Fixture implements ContainerAwareInterface
 {
 	use ContainerAwareTrait;
 
+    /**
+     * @param ObjectManager $manager
+     */
 	public function load(ObjectManager $manager)
 	{
 		$passwordEncoder = $this->container->get('security.password_encoder');

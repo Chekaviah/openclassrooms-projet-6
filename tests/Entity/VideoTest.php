@@ -2,11 +2,15 @@
 
 namespace App\Tests\Entity;
 
-
 use App\Entity\Trick;
 use App\Entity\Video;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class VideoTest
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class VideoTest extends TestCase
 {
 	public function testAttributes()

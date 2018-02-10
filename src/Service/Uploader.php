@@ -4,6 +4,11 @@ namespace App\Service;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * Class Uploader
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class Uploader
 {
 	/**
@@ -13,6 +18,7 @@ class Uploader
 
 	/**
 	 * Uploader constructor.
+     *
 	 * @param string $targetDir
 	 */
 	public function __construct(string $targetDir)
@@ -51,6 +57,7 @@ class Uploader
 
 	/**
 	 * @param UploadedFile $file
+     *
 	 * @return string
 	 */
 	public function getExtension(UploadedFile $file): string
@@ -60,6 +67,7 @@ class Uploader
 
 	/**
 	 * @param UploadedFile $file
+     *
 	 * @return string
 	 */
 	public function getOriginalName(UploadedFile $file): string

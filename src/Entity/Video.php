@@ -2,10 +2,14 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Trick;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Class Video
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ *
  * @ORM\Table(name="video")
  * @ORM\Entity(repositoryClass="App\Repository\VideoRepository")
  */
@@ -13,6 +17,7 @@ class Video
 {
     /**
 	 * @var int
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -21,17 +26,21 @@ class Video
 
 	/**
 	 * @var string
+     *
 	 * @ORM\Column(name="url", type="string", length=255)
 	 */
 	private $url;
 
 	/**
 	 * @var string
+     *
 	 * @ORM\Column(name="website", type="string", length=255)
 	 */
 	private $website;
 
 	/**
+     * @var Trick
+     *
 	 * @ORM\ManyToOne(targetEntity="App\Entity\Trick", inversedBy="videos")
 	 * @ORM\JoinColumn(nullable=false)
 	 */
@@ -47,6 +56,7 @@ class Video
 
 	/**
 	 * @param string $url
+     *
 	 * @return Video
 	 */
 	public function setUrl(string $url): Video
@@ -82,6 +92,7 @@ class Video
 
 	/**
 	 * @param Trick $trick
+     *
 	 * @return Video
 	 */
 	public function setTrick(Trick $trick): Video
@@ -104,7 +115,6 @@ class Video
 	 */
 	public function getIframe(): ?string
 	{
-		$url = '';
 		if($this->website == 'youtube') {
 			$url = 'https://www.youtube.com/embed/'.$this->url;
 		} else {

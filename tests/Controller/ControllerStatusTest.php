@@ -2,11 +2,15 @@
 
 namespace App\Tests\Controller;
 
-
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * Class ControllerStatusTest
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class ControllerStatusTest extends WebTestCase
 {
     /**
@@ -48,6 +52,9 @@ class ControllerStatusTest extends WebTestCase
         static::assertTrue($client->getResponse()->isSuccessful());
     }
 
+    /**
+     * @return \Generator
+     */
     public function urlProvider()
     {
         yield ['/'];
@@ -58,6 +65,9 @@ class ControllerStatusTest extends WebTestCase
         yield ['/trick/view/bs-540-seatbelt'];
     }
 
+    /**
+     * @return \Generator
+     */
     public function protectedUrlProvider()
     {
         yield ['/trick/create'];

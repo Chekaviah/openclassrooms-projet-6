@@ -3,14 +3,18 @@
 namespace App\Entity;
 
 use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Category;
 use App\Entity\Image;
+use App\Entity\Category;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
+ * Class Trick
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ *
  * @ORM\Table(name="trick")
  * @ORM\Entity(repositoryClass="App\Repository\TrickRepository")
  */
@@ -18,6 +22,7 @@ class Trick
 {
     /**
 	 * @var int
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -26,36 +31,42 @@ class Trick
 
 	/**
 	 * @var string
+     *
 	 * @ORM\Column(type="string", length=100, unique=true)
 	 */
 	private $name;
 
 	/**
 	 * @var string
+     *
 	 * @ORM\Column(type="string", length=100, unique=true)
 	 */
 	private $slug;
 
 	/**
 	 * @var string
+     *
 	 * @ORM\Column(type="text", nullable=true)
 	 */
 	private $description;
 
 	/**
 	 * @var DateTime
+     *
 	 * @ORM\Column(type="datetime")
 	 */
 	private $created;
 
 	/**
 	 * @var DateTime
+     *
 	 * @ORM\Column(type="datetime")
 	 */
 	private $updated;
 
 	/**
 	 * @var Category[]|ArrayCollection
+     *
 	 * @ORM\ManyToMany(targetEntity="Category", cascade={"persist"}, inversedBy="tricks")
 	 * @JoinTable(name="trick_category")
 	 */
@@ -63,22 +74,28 @@ class Trick
 
 	/**
 	 * @var Image[]|ArrayCollection
+     *
 	 * @ORM\OneToMany(targetEntity="App\Entity\Image", cascade={"persist", "remove", "refresh"}, mappedBy="trick", orphanRemoval=true)
 	 */
 	private $images;
 
 	/**
 	 * @var Video[]|ArrayCollection
+     *
 	 * @ORM\OneToMany(targetEntity="App\Entity\Video", cascade={"persist", "remove", "refresh"}, mappedBy="trick", orphanRemoval=true)
 	 */
 	private $videos;
 
 	/**
 	 * @var Comment[]|ArrayCollection
+     *
 	 * @ORM\OneToMany(targetEntity="App\Entity\Comment", cascade={"persist", "remove", "refresh"}, mappedBy="trick", orphanRemoval=true)
 	 */
 	private $comments;
 
+    /**
+     * Trick constructor.
+     */
 	public function __construct()
 	{
 		$this->images = new ArrayCollection();

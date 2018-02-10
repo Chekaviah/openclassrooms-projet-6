@@ -2,12 +2,16 @@
 
 namespace App\Handler;
 
-
 use App\Entity\User;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * Class LostPasswordHandler
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class LostPasswordHandler
 {
     /**
@@ -22,6 +26,7 @@ class LostPasswordHandler
 
     /**
      * LostPasswordHandler constructor.
+     *
      * @param EntityManagerInterface $entityManager
      * @param ManagerRegistry $managerRegistry
      */
@@ -33,7 +38,8 @@ class LostPasswordHandler
 
     /**
      * @param FormInterface $form
-     * @param User $user
+     * @param User $userForm
+     *
      * @return bool
      */
     public function handle(FormInterface $form, User $userForm)

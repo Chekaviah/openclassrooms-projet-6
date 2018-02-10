@@ -2,15 +2,19 @@
 
 namespace App\Tests\Entity;
 
-
-use App\Entity\Category;
-use App\Entity\Comment;
+use DateTime;
 use App\Entity\Image;
 use App\Entity\Trick;
 use App\Entity\Video;
-use DateTime;
+use App\Entity\Comment;
+use App\Entity\Category;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class TrickTest
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class TrickTest extends TestCase
 {
 	public function testAttributes()

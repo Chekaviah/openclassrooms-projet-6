@@ -2,12 +2,16 @@
 
 namespace App\Entity;
 
+use App\Entity\Trick;
 use App\Service\Uploader;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Trick;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
+ * Class Image
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ *
  * @ORM\Table(name="image")
  * @ORM\Entity(repositoryClass="App\Repository\ImageRepository")
  * @ORM\EntityListeners({"App\EventListener\ImageUploadListener"})
@@ -16,6 +20,7 @@ class Image
 {
     /**
 	 * @var int
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -24,12 +29,14 @@ class Image
 
 	/**
 	 * @var string
+     *
 	 * @ORM\Column(name="name", type="string", length=255)
 	 */
 	private $name;
 
 	/**
 	 * @var string
+     *
 	 * @ORM\Column(name="extension", type="string", length=255)
 	 */
 	private $extension;
@@ -49,10 +56,6 @@ class Image
 	 * @var string
 	 */
 	private $tempFilename;
-
-	public function __construct()
-	{
-	}
 
 	/**
 	 * @return int
