@@ -6,6 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
+ * Class User
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
@@ -13,6 +17,7 @@ class User implements AdvancedUserInterface, \Serializable
 {
     /**
 	 * @var int
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -21,6 +26,7 @@ class User implements AdvancedUserInterface, \Serializable
 
 	/**
 	 * @var string
+     *
 	 * @ORM\Column(type="string", length=25, unique=true)
 	 */
 	private $username;
@@ -37,50 +43,53 @@ class User implements AdvancedUserInterface, \Serializable
 
 	/**
 	 * @var string
+     *
 	 * @ORM\Column(type="string", length=64)
 	 */
 	private $password;
 
 	/**
 	 * @var string
+     *
 	 * @ORM\Column(type="string", length=60, unique=true)
 	 */
 	private $email;
 
 	/**
 	 * @var boolean
+     *
 	 * @ORM\Column(name="is_active", type="boolean")
 	 */
 	private $isActive = false;
 
 	/**
 	 * @var array
+     *
 	 * @ORM\Column(name="roles", type="json")
 	 */
 	private $roles = [];
 
 	/**
 	 * @var string
+     *
 	 * @ORM\Column(type="string", length=64, nullable=true)
 	 */
 	private $confirmationToken = null;
 
 	/**
 	 * @var string
+     *
 	 * @ORM\Column(type="string", length=64, nullable=true)
 	 */
 	private $resetToken = null;
 
 	/**
 	 * @var Avatar
+     *
 	 * @ORM\OneToOne(targetEntity="App\Entity\Avatar", cascade={"persist", "remove", "refresh"}, fetch="EAGER", orphanRemoval=true)
 	 * @ORM\JoinColumn(nullable=true)
 	 */
 	private $avatar;
-
-	public function __construct()
-	{
-	}
 
 	/**
 	 * @return int

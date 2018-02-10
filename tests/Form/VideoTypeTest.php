@@ -2,11 +2,15 @@
 
 namespace App\Tests\Form;
 
-
 use App\Entity\Video;
 use App\Form\Type\VideoType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
+/**
+ * Class VideoTypeTest
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class VideoTypeTest extends TypeTestCase
 {
 	/**
@@ -36,6 +40,9 @@ class VideoTypeTest extends TypeTestCase
 		}
 	}
 
+    /**
+     * @return array
+     */
 	public function getData()
 	{
 		return array(

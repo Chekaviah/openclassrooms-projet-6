@@ -2,10 +2,16 @@
 
 namespace App\Service;
 
+/**
+ * Class Slugger
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class Slugger
 {
 	/**
 	 * @param string $text
+     *
 	 * @return string
 	 */
 	public static function slugify(string $text): string

@@ -2,10 +2,14 @@
 
 namespace App\Tests\Controller;
 
-
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * Class UserControllerTest
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class UserControllerTest extends WebTestCase
 {
     public function testProfileEdit()
@@ -24,6 +28,11 @@ class UserControllerTest extends WebTestCase
         static::assertSame('admintest', $name);
     }
 
+    /**
+     * @param string $name
+     *
+     * @return \Symfony\Bundle\FrameworkBundle\Client
+     */
     public function getClient(string $name)
     {
         return self::createClient(array(), array(

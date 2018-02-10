@@ -3,11 +3,21 @@
 namespace App\Repository;
 
 use App\Entity\Trick;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
+/**
+ * Class TrickRepository
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class TrickRepository extends ServiceEntityRepository
 {
+    /**
+     * TrickRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Trick::class);
@@ -31,6 +41,7 @@ class TrickRepository extends ServiceEntityRepository
 
 	/**
 	 * @param string $slug
+     *
 	 * @return mixed
 	 */
 	public function findOneBySlugWithData(string $slug)
@@ -52,6 +63,7 @@ class TrickRepository extends ServiceEntityRepository
 
 	/**
 	 * @param int $id
+     *
 	 * @return mixed
 	 */
 	public function findOneByIdWithData(int $id)

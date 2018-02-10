@@ -5,6 +5,11 @@ namespace App\Tests\Service;
 use App\Service\UrlExtractor;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class UrlExtractorTest
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class UrlExtractorTest extends TestCase
 {
 	/**

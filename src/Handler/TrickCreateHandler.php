@@ -2,11 +2,15 @@
 
 namespace App\Handler;
 
-
 use App\Entity\Trick;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * Class TrickCreateHandler
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class TrickCreateHandler
 {
     /**
@@ -16,6 +20,7 @@ class TrickCreateHandler
 
     /**
      * TrickCreateHandler constructor.
+     *
      * @param EntityManagerInterface $entityManager
      */
     public function __construct(EntityManagerInterface $entityManager)
@@ -26,6 +31,7 @@ class TrickCreateHandler
     /**
      * @param FormInterface $form
      * @param Trick $trick
+     *
      * @return bool
      */
     public function handle(FormInterface $form, Trick $trick): bool

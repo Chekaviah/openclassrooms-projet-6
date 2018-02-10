@@ -6,6 +6,11 @@ use App\Service\Uploader;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * Class UploaderTest
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class UploaderTest extends TestCase
 {
 	public function testTargetDir()

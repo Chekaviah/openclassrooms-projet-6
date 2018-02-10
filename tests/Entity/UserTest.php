@@ -2,11 +2,15 @@
 
 namespace App\Tests\Entity;
 
-
-use App\Entity\Avatar;
 use App\Entity\User;
+use App\Entity\Avatar;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class UserTest
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class UserTest extends TestCase
 {
 	public function testAttributes()

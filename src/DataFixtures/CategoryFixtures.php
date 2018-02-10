@@ -3,10 +3,15 @@
 namespace App\DataFixtures;
 
 use App\Service\Slugger;
+use App\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use App\Entity\Category;
 
+/**
+ * Class CategoryFixtures
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class CategoryFixtures extends Fixture
 {
 	/**

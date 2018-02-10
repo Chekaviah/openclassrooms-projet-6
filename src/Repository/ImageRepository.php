@@ -3,26 +3,23 @@
 namespace App\Repository;
 
 use App\Entity\Image;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
+/**
+ * Class ImageRepository
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class ImageRepository extends ServiceEntityRepository
 {
+    /**
+     * ImageRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Image::class);
     }
-
-    /*
-    public function findBySomething($value)
-    {
-        return $this->createQueryBuilder('i')
-            ->where('i.something = :value')->setParameter('value', $value)
-            ->orderBy('i.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 }

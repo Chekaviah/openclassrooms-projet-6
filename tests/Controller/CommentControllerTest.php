@@ -2,10 +2,14 @@
 
 namespace App\Tests\Controller;
 
-
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * Class CommentControllerTest
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class CommentControllerTest extends WebTestCase
 {
     public function testCommentAdd()

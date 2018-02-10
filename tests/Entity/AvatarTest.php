@@ -2,11 +2,15 @@
 
 namespace App\Tests\Entity;
 
-
 use App\Entity\Avatar;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * Class AvatarTest
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class AvatarTest extends TestCase
 {
 	public function testAttributes()

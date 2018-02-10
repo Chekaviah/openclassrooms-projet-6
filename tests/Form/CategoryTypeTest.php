@@ -2,11 +2,15 @@
 
 namespace App\Tests\Form;
 
-
 use App\Entity\Category;
 use App\Form\Type\CategoryType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
+/**
+ * Class CategoryTypeTest
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class CategoryTypeTest extends TypeTestCase
 {
 	/**
@@ -36,6 +40,9 @@ class CategoryTypeTest extends TypeTestCase
 		}
 	}
 
+    /**
+     * @return array
+     */
 	public function getData()
 	{
 		return array(

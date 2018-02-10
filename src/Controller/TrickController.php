@@ -2,21 +2,27 @@
 
 namespace App\Controller;
 
-use App\Entity\Comment;
 use App\Entity\Trick;
-use App\Form\Type\CommentType;
+use App\Entity\Comment;
 use App\Form\Type\TrickType;
-use App\Handler\TrickCreateHandler;
+use App\Form\Type\CommentType;
 use App\Handler\TrickEditHandler;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Handler\TrickCreateHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * Class TrickController
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class TrickController extends AbstractController
 {
     /**
      * @Route("/", methods="GET", name="trick_list")
+     *
      * @return Response
      */
     public function listAction(): Response
@@ -32,7 +38,9 @@ class TrickController extends AbstractController
 
     /**
      * @param string $slug
+     *
      * @Route("/trick/view/{slug}", methods="GET", name="trick_view")
+     *
      * @return Response
      */
     public function viewAction(string $slug): Response
@@ -54,8 +62,11 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request            $request
+     * @param TrickCreateHandler $trickCreateHandler
+     *
      * @Route("/trick/create", methods={"GET","POST"}, name="trick_create")
+     *
      * @return Response
      */
     public function createAction(Request $request, TrickCreateHandler $trickCreateHandler): Response
@@ -74,7 +85,10 @@ class TrickController extends AbstractController
     /**
      * @param int $id
      * @param Request $request
+     * @param TrickEditHandler $trickEditHandler
+     *
      * @Route("/trick/edit/{id}", methods={"GET","POST"}, requirements={"id": "\d+"}, name="trick_edit")
+     *
      * @return Response
      */
     public function editAction(Request $request, TrickEditHandler $trickEditHandler, int $id): Response
@@ -100,7 +114,9 @@ class TrickController extends AbstractController
     /**
      * @param int $id
      * @param Request $request
+     *
      * @Route("/trick/delete/{id}", methods="POST", requirements={"id": "\d+"}, name="trick_delete")
+     *
      * @return Response
      */
     public function deleteAction(Request $request, $id): Response

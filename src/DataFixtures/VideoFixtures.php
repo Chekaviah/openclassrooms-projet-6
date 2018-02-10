@@ -7,6 +7,11 @@ use App\Entity\Video;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
+/**
+ * Class VideoFixtures
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class VideoFixtures extends Fixture
 {
 	/**
@@ -57,6 +62,9 @@ class VideoFixtures extends Fixture
 		$manager->flush();
 	}
 
+    /**
+     * @return array
+     */
 	public function getDependencies()
 	{
 		return array(

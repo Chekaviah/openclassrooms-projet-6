@@ -2,30 +2,36 @@
 
 namespace App\Controller;
 
-
 use App\Entity\User;
+use App\Form\Type\UserType;
 use App\Event\UserCreatedEvent;
-use App\Event\UserResetPasswordEvent;
-use App\Form\Type\ChangePasswordType;
+use App\Handler\RegisterHandler;
 use App\Form\Type\LostPasswordType;
 use App\Form\Type\ResetPasswordType;
-use App\Form\Type\UserType;
-use App\Handler\ChangePasswordHandler;
 use App\Handler\LostPasswordHandler;
-use App\Handler\RegisterHandler;
+use App\Event\UserResetPasswordEvent;
+use App\Form\Type\ChangePasswordType;
 use App\Handler\ResetPasswordHandler;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use App\Handler\ChangePasswordHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+/**
+ * Class SecurityController
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class SecurityController extends AbstractController
 {
 	/**
-     * @param AuthenticationUtils $authUtilss
+     * @param AuthenticationUtils $authUtils
+     *
 	 * @Route("/login", methods={"GET", "POST"}, name="security_login")
+     *
 	 * @return Response
 	 */
 	public function loginAction(AuthenticationUtils $authUtils): Response
@@ -44,7 +50,9 @@ class SecurityController extends AbstractController
 	 * @param Request $request
 	 * @param RegisterHandler $registerHandler
 	 * @param EventDispatcherInterface $dispatcher
+     *
 	 * @Route("/register", methods={"GET", "POST"}, name="security_register")
+     *
 	 * @return Response
 	 */
 	public function registerAction(Request $request, RegisterHandler $registerHandler, EventDispatcherInterface $dispatcher): Response
@@ -67,6 +75,7 @@ class SecurityController extends AbstractController
 
 	/**
 	 * @throws \Exception
+     *
 	 * @Route("/logout", name="security_logout")
 	 */
 	public function logout()
@@ -76,7 +85,9 @@ class SecurityController extends AbstractController
 
 	/**
 	 * @param string $token
+     *
 	 * @Route("/confirm/{token}", methods={"GET"}, name="security_confirm")
+     *
 	 * @return Response
 	 */
 	public function confirmAction(string $token)
@@ -99,10 +110,12 @@ class SecurityController extends AbstractController
 	}
 
 	/**
-	 * @param Request
+	 * @param Request $request
      * @param LostPasswordHandler $lostPasswordHandler
 	 * @param EventDispatcherInterface $dispatcher
+     *
 	 * @Route("/lost-password", methods={"GET", "POST"}, name="security_lost_password")
+     *
 	 * @return Response
 	 */
 	public function lostPasswordAction(Request $request, LostPasswordHandler $lostPasswordHandler, EventDispatcherInterface $dispatcher)
@@ -127,7 +140,9 @@ class SecurityController extends AbstractController
 	/**
 	 * @param Request $request
      * @param ResetPasswordHandler $resetPasswordHandler
+     *
 	 * @Route("/reset-password", methods={"GET", "POST"}, name="security_reset_password")
+     *
 	 * @return Response
 	 */
 	public function resetPasswordAction(Request $request, ResetPasswordHandler $resetPasswordHandler)
@@ -148,7 +163,9 @@ class SecurityController extends AbstractController
     /**
      * @param Request $request
      * @param ChangePasswordHandler $changePasswordHandler
+     *
      * @Route("/change-password", methods={"GET", "POST"}, name="security_change_password")
+     *
      * @return Response
      */
 	public function changePasswordAction(Request $request, ChangePasswordHandler $changePasswordHandler)

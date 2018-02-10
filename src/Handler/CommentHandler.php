@@ -2,13 +2,17 @@
 
 namespace App\Handler;
 
-
-use App\Entity\Comment;
-use App\Entity\Trick;
 use App\Entity\User;
+use App\Entity\Trick;
+use App\Entity\Comment;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * Class CommentHandler.
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class CommentHandler
 {
     /**
@@ -18,6 +22,7 @@ class CommentHandler
 
     /**
      * CommentHandler constructor.
+     *
      * @param EntityManagerInterface $entityManager
      */
     public function __construct(EntityManagerInterface $entityManager)
@@ -27,9 +32,10 @@ class CommentHandler
 
     /**
      * @param FormInterface $form
-     * @param Comment $comment
-     * @param User $user
-     * @param Trick $trick
+     * @param Comment       $comment
+     * @param User          $user
+     * @param Trick         $trick
+     *
      * @return bool
      */
     public function handle(FormInterface $form, Comment $comment, User $user, Trick $trick): bool

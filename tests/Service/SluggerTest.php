@@ -5,6 +5,11 @@ namespace App\Tests\Service;
 use App\Service\Slugger;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class SluggerTest
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class SluggerTest extends TestCase
 {
 	/**

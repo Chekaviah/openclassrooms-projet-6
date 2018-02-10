@@ -2,13 +2,17 @@
 
 namespace App\DataFixtures;
 
-
-use App\Entity\Category;
 use App\Entity\Trick;
+use App\Entity\Category;
 use App\Service\Slugger;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
+/**
+ * Class TrickFixtures
+ *
+ * @author Mathieu GUILLEMINOT <guilleminotm@gmail.com>
+ */
 class TrickFixtures extends Fixture
 {
 	/**
@@ -150,6 +154,9 @@ class TrickFixtures extends Fixture
 		$manager->flush();
 	}
 
+    /**
+     * @return array
+     */
 	public function getDependencies()
 	{
 		return array(
