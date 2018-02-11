@@ -8,7 +8,7 @@ Snowtricks is a symfony 4 project for the Openclassrooms "Application developer"
 
 **SensioLabsInsight**
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/00b46792-eadd-4bac-8a59-0caa3332f78a/big.png)](https://insight.sensiolabs.com/projects/00b46792-eadd-4bac-8a59-0caa3332f78a)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/cc396aff-ea47-4fc6-8eb9-e8de85a30b75/big.png)](https://insight.sensiolabs.com/projects/cc396aff-ea47-4fc6-8eb9-e8de85a30b75)
 
 
 ## Requirements 
